@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三明治自己來｜月度財報</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0f1923; --paper:#f5f0e8; --cream:#ede8dc;
+  --green:#1a6b3a; --green-lt:#d4edda;
+  --amber:#b35c00; --amber-lt:#fdebd0;
+  --red:#8b1a1a; --blue:#1a3a6b; --blue-lt:#dce8f7;
+  --teal:#0e6b74; --teal-lt:#d5eff2;
+  --rule:#c8c0b0; --gray:#f3f0ea;
+  --mono:'DM Mono',monospace;
+  --serif:'Noto Serif TC',serif;
+  --sans:'Noto Sans TC',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:13px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ── 頂部導覽 ── */
+.site-nav {
+  background:var(--ink);
+  padding:0 40px;
+  display:flex;
+  align-items:center;
+  gap:0;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.site-brand {
+  font-family:var(--serif);
+  font-size:14px;
+  color:white;
+  font-weight:700;
+  padding:14px 24px 14px 0;
+  border-right:1px solid rgba(255,255,255,.15);
+  margin-right:4px;
+  white-space:nowrap;
+}
+.nav-tab {
+  padding:14px 20px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.5);
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:all .2s;
+  white-space:nowrap;
+  border:none;
+  background:none;
+  font-family:var(--sans);
+}
+.nav-tab:hover{color:rgba(255,255,255,.85)}
+.nav-tab.active{color:white;border-bottom:2px solid white}
+.nav-tab.compare-tab{color:rgba(255,200,100,.7)}
+.nav-tab.compare-tab.active{color:rgb(255,220,100);border-bottom-color:rgb(255,220,100)}
+.nav-spacer{flex:1}
+.nav-note{font-size:10px;color:rgba(255,255,255,.3);font-family:var(--mono);padding-right:4px}
+
+/* ── 頁面 ── */
+.page{display:none;max-width:860px;margin:0 auto;padding:44px 38px 64px;animation:fadeIn .3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── 報頭 ── */
+.masthead{border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);padding:18px 0 14px;margin-bottom:26px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+.brand-eye{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#888;margin-bottom:5px}
+.brand-name{font-family:var(--serif);font-size:28px;font-weight:900;letter-spacing:-.5px;line-height:1}
+.meta{text-align:right;font-family:var(--mono);font-size:10px;color:#888;line-height:1.9}
+.meta strong{display:block;font-size:13px;color:var(--ink);font-family:var(--sans)}
+
+/* ── KPI帶 ── */
+.kpi-band{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ink);border:1px solid var(--ink);margin-bottom:26px}
+.kpi{background:var(--paper);padding:17px 16px 15px;position:relative}
+.kpi.accent{background:var(--ink);color:white}
+.kpi.g-accent{background:var(--green);color:white}
+.kpi-label{font-size:8.5px;font-weight:500;letter-spacing:2px;text-transform:uppercase;opacity:.6;margin-bottom:5px}
+.kpi-value{font-family:var(--serif);font-size:24px;line-height:1;letter-spacing:-1px}
+.kpi-sub{font-family:var(--mono);font-size:10px;margin-top:4px;opacity:.65}
+.kpi-badge{position:absolute;top:11px;right:11px;font-size:8.5px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px}
+.badge-w{background:rgba(255,255,255,.2);color:white}
+
+/* ── 分節 ── */
+.sec{display:flex;align-items:center;gap:10px;margin:22px 0 9px}
+.sec-n{font-family:var(--serif);font-size:11px;width:24px;height:24px;border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0}
+.sec-t{font-size:9.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase}
+.sec-r{flex:1;height:1px;background:var(--rule)}
+
+/* ── 損益表 ── */
+.pnl{width:100%;border-collapse:collapse;font-size:12.5px}
+.pnl thead tr{border-bottom:1.5px solid var(--ink)}
+.pnl thead th{font-size:8.5px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#888;padding:5px 10px 7px;text-align:left}
+.pnl thead th:not(:first-child){text-align:right}
+.pnl tbody tr{border-bottom:1px solid var(--cream)}
+.pnl tbody tr:hover{background:rgba(0,0,0,.02)}
+.pnl td{padding:8px 10px;vertical-align:middle}
+.pnl td:not(:first-child){text-align:right;font-family:var(--mono);font-size:11.5px}
+.pnl .lbl{font-weight:600}
+.pnl .sub td:first-child{padding-left:28px;font-weight:300;color:#555;font-size:11.5px}
+.pnl .sub td:not(:first-child){color:#666;font-size:11.5px}
+.pnl .total-row td{font-weight:700;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);background:var(--ink);color:white;font-family:var(--mono)}
+.pnl .total-row td:first-child{font-family:var(--sans);font-weight:700}
+.pnl .gross-row td{background:var(--green-lt);color:var(--green);font-weight:700;border-top:1px solid #a8d5b8;border-bottom:1px solid #a8d5b8}
+.pnl .net-row td{background:var(--green);color:white;font-weight:700;font-size:13.5px}
+.pnl .net-row td:first-child{font-family:var(--serif);font-size:15px}
+.pnl .warn-row td:first-child::before{content:'⚠ ';color:var(--amber)}
+
+/* 進度條 */
+.bw{display:flex;align-items:center;gap:7px;justify-content:flex-end}
+.bw span{font-size:11px}
+.bar{width:52px;height:5px;background:#e0dbd0;border-radius:3px;overflow:hidden;flex-shrink:0}
+.bf{height:100%;border-radius:3px}
+.c-ink{background:var(--ink)}.c-g{background:var(--green)}.c-a{background:var(--amber)}.c-r{background:var(--red)}.c-b{background:var(--blue)}
+
+/* ── 運費框 ── */
+.freight{border:1px solid var(--rule);border-left:3px solid var(--green);background:#fafaf6;padding:12px 14px;margin-top:16px;display:grid;grid-template-columns:1fr 1fr 1fr}
+.fi{padding:4px 12px;border-right:1px solid var(--rule)}
+.fi:first-child{padding-left:0}.fi:last-child{border-right:none}
+.fi-l{font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:2px}
+.fi-v{font-family:var(--mono);font-size:14px;font-weight:500}
+.fi-v.pos{color:var(--amber)}
+.fi-n{font-size:9px;color:#999;margin-top:1px}
+.fc{grid-column:1/-1;font-size:10px;color:#555;font-weight:500;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule)}
+
+/* ── 診斷卡 ── */
+.diag{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+.dc{border:1px solid var(--rule);padding:12px;position:relative}
+.dc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.dc.ok::before{background:var(--green)}.dc.warn::before{background:var(--amber)}.dc.info::before{background:var(--blue)}.dc.star::before{background:linear-gradient(90deg,var(--green),var(--teal))}
+.dc-tag{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:2px 0 5px}
+.dc.ok .dc-tag,.dc.star .dc-tag{color:var(--green)}.dc.warn .dc-tag{color:var(--amber)}.dc.info .dc-tag{color:var(--blue)}
+.dc-num{font-family:var(--mono);font-size:19px;font-weight:500;line-height:1.1;margin-bottom:3px}
+.dc.ok .dc-num,.dc.star .dc-num{color:var(--green)}.dc.warn .dc-num{color:var(--amber)}.dc.info .dc-num{color:var(--blue)}
+.dc-title{font-size:11.5px;font-weight:700;margin-bottom:3px}
+.dc-body{font-size:10px;color:#666;line-height:1.55}
+
+/* ── 對比頁 ── */
+.compare-header{background:linear-gradient(135deg,var(--ink) 0%,#2a4a6b 100%);padding:32px 38px;margin:-44px -38px 32px;color:white}
+.ch-eye{font-size:9px;letter-spacing:3px;text-transform:uppercase;opacity:.5;margin-bottom:8px}
+.ch-title{font-family:var(--serif);font-size:28px;font-weight:900;line-height:1;margin-bottom:6px}
+.ch-sub{font-size:11px;opacity:.6}
+
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:20px}
+.cc{background:var(--paper);padding:18px}
+.cc.now{background:#f0faf4}
+.cc-month{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:10px}
+.cc-month.green{color:var(--green);font-weight:700}
+.cc-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--cream);font-size:12px}
+.cc-row:last-child{border-bottom:none}
+.cc-val{font-family:var(--mono);font-size:12px;font-weight:500}
+.cc.now .cc-val{color:var(--green)}
+
+.delta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
+.delta-card{border:1px solid var(--rule);padding:12px;text-align:center}
+.delta-label{font-size:8.5px;color:#999;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.delta-val{font-family:var(--mono);font-size:18px;font-weight:700}
+.delta-up{color:var(--green)}.delta-dn{color:var(--amber)}
+.delta-note{font-size:9.5px;color:#888;margin-top:3px}
+
+.insight-box{border:1px solid var(--rule);border-left:3px solid var(--blue);background:var(--blue-lt);padding:14px 16px;margin-bottom:12px}
+.insight-title{font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px;letter-spacing:.5px}
+.insight-list{list-style:none;padding:0}
+.insight-list li{font-size:11px;color:#333;padding:4px 0;border-bottom:1px solid rgba(26,58,107,.1);line-height:1.6}
+.insight-list li:last-child{border-bottom:none}
+.insight-list li::before{content:'→  ';color:var(--blue);font-weight:700}
+
+.warn-box{border:1px solid var(--rule);border-left:3px solid var(--amber);background:var(--amber-lt);padding:14px 16px;margin-bottom:12px}
+.warn-title{font-size:11px;font-weight:700;color:var(--amber);margin-bottom:8px}
+.warn-list{list-style:none;padding:0}
+.warn-list li{font-size:11px;color:#333;padding:4px 0;border-bottom:1px solid rgba(179,92,0,.1);line-height:1.6}
+.warn-list li:last-child{border-bottom:none}
+.warn-list li::before{content:'⚠  ';color:var(--amber)}
+
+/* ── 營收明細表 ── */
+.sub-head{font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin:12px 0 5px;padding-bottom:4px;border-bottom:1px solid var(--blue-lt)}
+.rt{width:100%;border-collapse:collapse;font-size:11.5px}
+.rt thead tr{border-bottom:1.5px solid var(--ink)}
+.rt thead th{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#888;padding:4px 8px 5px;text-align:left}
+.rt thead th:not(:first-child){text-align:right}
+.rt tbody tr{border-bottom:1px solid var(--cream)}
+.rt tbody td{padding:5px 8px}
+.rt tbody td:not(:first-child){text-align:right;font-family:var(--mono);font-size:10.5px}
+.rt .tw-sub td{background:var(--green-lt);color:var(--green);font-weight:700}
+.rt .hk-sub td{background:var(--teal-lt);color:var(--teal);font-weight:700}
+.rt .grand td{background:var(--ink);color:white;font-weight:700}
+
+/* ── 折疊營收明細 ── */
+.accordion{border:1px solid var(--rule);margin-top:16px;overflow:hidden;border-radius:2px}
+.accordion-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:var(--gray);border:none;cursor:pointer;font-family:var(--sans);font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);transition:background .2s}
+.accordion-btn:hover{background:#e4e0d6}
+.accordion-btn.open{background:var(--blue-lt)}
+.accordion-summary{display:flex;gap:16px;font-size:9px;color:#999;font-family:var(--mono);font-weight:400;letter-spacing:0;text-transform:none}
+.accordion-summary span{color:var(--blue);font-weight:600}
+.acc-arrow{font-size:10px;transition:transform .25s;color:var(--blue);flex-shrink:0}
+.accordion-btn.open .acc-arrow{transform:rotate(180deg)}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.accordion-body.open{max-height:2000px}
+.accordion-inner{padding:14px 16px 18px;border-top:1px solid var(--rule)}
+
+/* ── 頁腳 ── */
+.folio{margin-top:40px;padding-top:10px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-size:9px;color:#bbb;font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<!-- 頂部導覽 -->
+<nav class="site-nav">
+  <div class="site-brand">三明治自己來</div>
+  <button class="nav-tab active" onclick="showPage('apr')">4月財報</button>
+  <button class="nav-tab" onclick="showPage('mar')">3月財報</button>
+  <button class="nav-tab compare-tab" onclick="showPage('cmp')">3–4月對比分析</button>
+  <div class="nav-spacer"></div>
+  <div class="nav-note">2026 財務報告</div>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+  4月財報
+══════════════════════════════════════════════ -->
+<div class="page active" id="page-apr">
+<div class="masthead">
+  <div><div class="brand-eye">月度財務報告</div><div class="brand-name">三明治自己來</div></div>
+  <div class="meta"><strong>2026年4月</strong>台灣 TW ＋ 香港 HK<br>含運費口徑｜統計至 4/30</div>
+</div>
+
+<div class="kpi-band">
+  <div class="kpi accent">
+    <div class="kpi-label">本期總營收</div><div class="kpi-value">$472,425</div>
+    <div class="kpi-sub">47.2425w｜100%</div><span class="kpi-badge badge-w">🎉 歷史新高</span>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">加總成本</div><div class="kpi-value">$268,106</div>
+    <div class="kpi-sub">26.8106w｜56.75%</div>
+  </div>
+  <div class="kpi g-accent">
+    <div class="kpi-label">本期淨利</div><div class="kpi-value">$204,319</div>
+    <div class="kpi-sub">20.4319w｜43.25%</div><span class="kpi-badge badge-w">盈利 ✓</span>
+  </div>
+</div>
+
+<div class="sec"><div class="sec-n">Ⅰ</div><div class="sec-t">損益明細</div><div class="sec-r"></div></div>
+<table class="pnl">
+  <thead><tr><th style="width:44%">項目</th><th style="width:17%">金額 NT$</th><th style="width:12%">萬元</th><th style="width:27%">佔營收%</th></tr></thead>
+  <tbody>
+    <tr class="lbl"><td>① 本期營收</td><td>472,425</td><td>47.2425w</td><td><div class="bw"><span>100.00%</span><div class="bar"><div class="bf c-ink" style="width:100%"></div></div></div></td></tr>
+    <tr class="sub"><td>商品金額（含消費者付運費）</td><td>472,425</td><td>47.2425w</td><td><div class="bw"><span>100%</span><div class="bar"><div class="bf c-ink" style="width:100%"></div></div></div></td></tr>
+    <tr class="sub"><td>　其中 B 系統運費（含於上）</td><td>26,543</td><td>2.6543w</td><td><div class="bw"><span>5.62%</span><div class="bar"><div class="bf c-ink" style="width:5.62%"></div></div></div></td></tr>
+    <tr class="lbl" style="border-top:1.5px solid var(--rule)"><td>② 銷貨成本（直接）</td><td>58,211</td><td>5.8211w</td><td><div class="bw"><span>12.32%</span><div class="bar"><div class="bf c-r" style="width:12.32%"></div></div></div></td></tr>
+    <tr class="sub"><td>食材／原料</td><td>54,906</td><td>5.4906w</td><td><div class="bw"><span>11.62%</span><div class="bar"><div class="bf c-r" style="width:11.62%"></div></div></div></td></tr>
+    <tr class="sub"><td>包材／耗材</td><td>3,305</td><td>0.3305w</td><td><div class="bw"><span>0.70%</span><div class="bar"><div class="bf c-r" style="width:0.70%"></div></div></div></td></tr>
+    <tr class="gross-row"><td>③ 毛　利</td><td>414,214</td><td>41.4214w</td><td><div class="bw"><span>87.68%</span><div class="bar"><div class="bf c-g" style="width:87.68%"></div></div></div></td></tr>
+    <tr class="lbl warn-row" style="border-top:1.5px solid var(--rule)"><td>④ 人事（薪資）</td><td>143,500</td><td>14.3500w</td><td><div class="bw"><span>30.38%</span><div class="bar"><div class="bf c-a" style="width:30.38%"></div></div></div></td></tr>
+    <tr class="sub"><td>主廚 $53,400 ／ 小編 $32,100 ／ 三姨 $52,000 ／ 小幫手 $6,000</td><td></td><td></td><td></td></tr>
+    <tr class="lbl" style="border-top:1px solid var(--rule)"><td>⑤ 運營費用（不含人事）</td><td>66,395</td><td>6.6395w</td><td><div class="bw"><span>14.05%</span><div class="bar"><div class="bf c-b" style="width:14.05%"></div></div></div></td></tr>
+    <tr class="sub"><td>設備／系統（電費+紙箱+官網分期+攪拌機）</td><td>25,094</td><td></td><td><div class="bw"><span>5.31%</span><div class="bar"><div class="bf c-b" style="width:5.31%"></div></div></div></td></tr>
+    <tr class="sub"><td>運費菜錢（現金）</td><td>20,000</td><td></td><td><div class="bw"><span>4.23%</span><div class="bar"><div class="bf c-b" style="width:4.23%"></div></div></div></td></tr>
+    <tr class="sub"><td>免運補貼（A-B，行銷費用）</td><td>14,947</td><td></td><td><div class="bw"><span>3.16%</span><div class="bar"><div class="bf c-b" style="width:3.16%"></div></div></div></td></tr>
+    <tr class="sub"><td>稅費／保費（2月＋3月健保）</td><td>4,351</td><td></td><td><div class="bw"><span>0.92%</span><div class="bar"><div class="bf c-b" style="width:0.92%"></div></div></div></td></tr>
+    <tr class="sub"><td>油費／交通</td><td>2,003</td><td></td><td><div class="bw"><span>0.42%</span><div class="bar"><div class="bf c-b" style="width:0.42%"></div></div></div></td></tr>
+    <tr class="total-row"><td>⑥ 加總營業成本</td><td>268,106</td><td>26.8106w</td><td style="font-family:var(--mono)">56.75%</td></tr>
+    <tr class="net-row"><td>⑦ 淨　利　✓</td><td>204,319</td><td>20.4319w</td><td style="font-family:var(--mono);font-size:15px;font-weight:700">43.25%</td></tr>
+  </tbody>
+</table>
+
+<div class="freight">
+  <div class="fi"><div class="fi-l">A 物流實收運費（成本）</div><div class="fi-v">$41,490</div><div class="fi-n">物流商向我們收取</div></div>
+  <div class="fi"><div class="fi-l">B 消費者付運費</div><div class="fi-v">$26,543</div><div class="fi-n">已含於營收中</div></div>
+  <div class="fi"><div class="fi-l">A-B 免運補貼（行銷費）</div><div class="fi-v pos">$14,947</div><div class="fi-n">1.4947w｜佔商品營收 3.16%</div></div>
+  <div class="fc">✓ 免運補貼為滿 $2,000 免運活動成本，已列入運營費用，成本已充分反映。</div>
+</div>
+
+<div class="sec" style="margin-top:26px"><div class="sec-n">Ⅱ</div><div class="sec-t">本月診斷</div><div class="sec-r"></div></div>
+<div class="diag">
+  <div class="dc star"><div class="dc-tag">🎉 歷史新高</div><div class="dc-num">47.2425w</div><div class="dc-title">營收創新高！</div><div class="dc-body">Dubai 系列爆發帶動三輪預購，TW 賣貨便三批穩定出貨，HK 持續貢獻，全面成長。</div></div>
+  <div class="dc ok"><div class="dc-tag">✓ 大幅改善</div><div class="dc-num">43.25%</div><div class="dc-title">淨利率大幅提升</div><div class="dc-body">對比 3月 26.31%，本月淨利率提升 16.9%。食材成本結構更健康，僅佔 12.32%。</div></div>
+  <div class="dc info"><div class="dc-tag">📋 持續觀察</div><div class="dc-num">30.38%</div><div class="dc-title">薪資佔比下降中</div><div class="dc-body">薪資 $143,500，佔比已從 31.16% 降至 30.38%，隨營收成長持續攤薄。</div></div>
+</div>
+
+<div class="sec" style="margin-top:24px"><div class="sec-n">Ⅲ</div><div class="sec-t">營收明細</div><div class="sec-r"></div></div>
+
+<div class="accordion">
+  <button class="accordion-btn" onclick="toggleAcc(this)">
+    <div style="display:flex;align-items:center;gap:12px">
+      <span>展開明細</span>
+      <div class="accordion-summary">預購3輪＋賣貨便3批＋HK3筆 &nbsp;|&nbsp; TW <span>$445,855</span> ／ HK <span>$26,570</span> ／ 總計 <span>$472,425</span></div>
+    </div>
+    <span class="acc-arrow">▼</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-inner">
+      <div class="sub-head">▌ 台灣預購單</div>
+      <table class="rt">
+        <thead><tr><th>次數</th><th>客單</th><th>改營收金額</th><th>A 實運費</th><th>B 系統運費</th><th>件數</th><th>個數</th><th>備註</th></tr></thead>
+        <tbody>
+          <tr><td>預購 1</td><td>$1,953</td><td>$119,130</td><td>$9,810</td><td>$5,600</td><td>61</td><td>491</td><td>0418到貨</td></tr>
+          <tr><td>預購 2</td><td>$2,153</td><td>$99,032</td><td>$7,435</td><td>$3,800</td><td>46</td><td>430</td><td>0430到貨</td></tr>
+          <tr><td>預購 3</td><td>$2,631</td><td>$99,995</td><td>$6,365</td><td>$1,000</td><td>38</td><td>422</td><td>0509到貨</td></tr>
+          <tr><td>自取</td><td>$700</td><td>$700</td><td>—</td><td>自取</td><td>1</td><td>1</td><td>芒果哥</td></tr>
+          <tr><td>黑貓理賠 1</td><td>—</td><td>$0</td><td>$190</td><td>黑貓</td><td>1</td><td>12</td><td>4/14 頭髮理賠</td></tr>
+          <tr><td>黑貓理賠 2</td><td>—</td><td>$0</td><td>$190</td><td>黑貓</td><td>1</td><td>14</td><td>3/28 塑膠理賠</td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:12px">▌ 台灣賣貨便</div>
+      <table class="rt">
+        <thead><tr><th>批次</th><th>客單</th><th>改營收金額</th><th>A 實運費</th><th>B 系統運費</th><th>件數</th><th>個數</th><th>出貨日</th></tr></thead>
+        <tbody>
+          <tr><td>0410-22</td><td>$874</td><td>$45,432</td><td>$6,708</td><td>$6,312</td><td>52</td><td>396</td><td>4/14出貨</td></tr>
+          <tr><td>0417-23</td><td>$1,143</td><td>$45,717</td><td>$5,160</td><td>$4,377</td><td>40</td><td>365</td><td>4/21出貨</td></tr>
+          <tr><td>0424-24</td><td>$1,022</td><td>$31,690</td><td>$3,999</td><td>$3,456</td><td>31</td><td>268</td><td>4/27出貨</td></tr>
+          <tr><td>中獎發票郵資</td><td>—</td><td>—</td><td>$56</td><td>—</td><td>—</td><td>—</td><td>4/1</td></tr>
+          <tr><td>0402 寄港來台</td><td>$959</td><td>$0</td><td>$129</td><td>$129</td><td>1</td><td>7</td><td>4/2 allday</td></tr>
+          <tr><td>0406 寄港來台</td><td>$3,200</td><td>$0</td><td>$129</td><td>$0</td><td>1</td><td>24</td><td>4/6 a lonely</td></tr>
+          <tr><td>0422-26 寄港來台</td><td>去年付清</td><td>$0</td><td>$129</td><td>$129</td><td>1</td><td>12</td><td>4/21 RAY M</td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:12px">▌ 小計 ＋ 總計</div>
+      <table class="rt">
+        <thead><tr><th></th><th>改營收金額</th><th>A 實運費</th><th>B 系統運費</th><th>A-B 補貼</th><th>件數</th><th>個數</th></tr></thead>
+        <tbody>
+          <tr class="tw-sub"><td>🇹🇼 TW 小計</td><td>$445,855</td><td>$40,300</td><td>$24,803</td><td>$15,497</td><td>274</td><td>2,442</td></tr>
+          <tr><td>HK-4-1</td><td>$16,500</td><td>$690</td><td>$870</td><td>—</td><td>3</td><td>116</td></tr>
+          <tr><td>HK-4-2</td><td>$3,280</td><td>$250</td><td>$290</td><td>—</td><td>1</td><td>28</td></tr>
+          <tr><td>HK-4-3</td><td>$6,790</td><td>$250</td><td>$580</td><td>—</td><td>1</td><td>53</td></tr>
+          <tr class="hk-sub"><td>🇭🇰 HK 小計</td><td>$26,570</td><td>$1,190</td><td>$1,740</td><td>—</td><td>5</td><td>197</td></tr>
+          <tr class="grand"><td>TW ＋ HK 總計</td><td>$472,425</td><td>$41,490</td><td>$26,543</td><td>$14,947</td><td>279</td><td>2,639</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="folio"><span>三明治自己來 SANDWICH.STORE</span><span>2026.04 MONTHLY REPORT</span><span>TW + HK CONSOLIDATED</span></div>
+</div><!-- end page-apr -->
+
+
+<!-- ══════════════════════════════════════════════
+  3月財報
+══════════════════════════════════════════════ -->
+<div class="page" id="page-mar">
+<div class="masthead">
+  <div><div class="brand-eye">月度財務報告</div><div class="brand-name">三明治自己來</div></div>
+  <div class="meta"><strong>2026年3月</strong>台灣 TW ＋ 香港 HK<br>含運費口徑｜統計至 3/31</div>
+</div>
+
+<div class="kpi-band">
+  <div class="kpi accent">
+    <div class="kpi-label">本期總營收</div><div class="kpi-value">$433,888</div>
+    <div class="kpi-sub">43.3888w｜100%</div><span class="kpi-badge badge-w">基準值</span>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">加總成本</div><div class="kpi-value">$319,736</div>
+    <div class="kpi-sub">31.9736w｜73.69%</div>
+  </div>
+  <div class="kpi g-accent">
+    <div class="kpi-label">本期淨利</div><div class="kpi-value">$114,152</div>
+    <div class="kpi-sub">11.4152w｜26.31%</div><span class="kpi-badge badge-w">盈利 ✓</span>
+  </div>
+</div>
+
+<div class="sec"><div class="sec-n">Ⅰ</div><div class="sec-t">損益明細</div><div class="sec-r"></div></div>
+<table class="pnl">
+  <thead><tr><th style="width:44%">項目</th><th style="width:17%">金額 NT$</th><th style="width:12%">萬元</th><th style="width:27%">佔營收%</th></tr></thead>
+  <tbody>
+    <tr class="lbl"><td>① 本期營收</td><td>433,888</td><td>43.3888w</td><td><div class="bw"><span>100.00%</span><div class="bar"><div class="bf c-ink" style="width:100%"></div></div></div></td></tr>
+    <tr class="sub"><td>商品營收（TW + HK）</td><td>388,870</td><td>38.8870w</td><td><div class="bw"><span>89.63%</span><div class="bar"><div class="bf c-ink" style="width:89.63%"></div></div></div></td></tr>
+    <tr class="sub"><td>本期實付運費（消費者付）</td><td>45,018</td><td>4.5018w</td><td><div class="bw"><span>10.37%</span><div class="bar"><div class="bf c-ink" style="width:10.37%"></div></div></div></td></tr>
+    <tr class="lbl" style="border-top:1.5px solid var(--rule)"><td>② 銷貨成本（直接）</td><td>115,571</td><td>11.5571w</td><td><div class="bw"><span>26.64%</span><div class="bar"><div class="bf c-r" style="width:26.64%"></div></div></div></td></tr>
+    <tr class="sub"><td>食材／原料（含雜項）</td><td>100,510</td><td>10.0510w</td><td><div class="bw"><span>23.16%</span><div class="bar"><div class="bf c-r" style="width:23.16%"></div></div></div></td></tr>
+    <tr class="sub"><td>包材／耗材</td><td>15,061</td><td>1.5061w</td><td><div class="bw"><span>3.47%</span><div class="bar"><div class="bf c-r" style="width:3.47%"></div></div></div></td></tr>
+    <tr class="gross-row"><td>③ 毛　利</td><td>318,317</td><td>31.8317w</td><td><div class="bw"><span>73.36%</span><div class="bar"><div class="bf c-g" style="width:73.36%"></div></div></div></td></tr>
+    <tr class="lbl warn-row" style="border-top:1.5px solid var(--rule)"><td>④ 人事（薪資）</td><td>135,200</td><td>13.5200w</td><td><div class="bw"><span>31.16%</span><div class="bar"><div class="bf c-a" style="width:31.16%"></div></div></div></td></tr>
+    <tr class="sub"><td>主廚 $51,200 ／ 行政 $32,000 ／ 三姨 $52,000</td><td></td><td></td><td></td></tr>
+    <tr class="lbl" style="border-top:1px solid var(--rule)"><td>⑤ 運營費用（不含人事）</td><td>68,965</td><td>6.8965w</td><td><div class="bw"><span>15.89%</span><div class="bar"><div class="bf c-b" style="width:15.89%"></div></div></div></td></tr>
+    <tr class="sub"><td>稅費／保費</td><td>13,731</td><td></td><td><div class="bw"><span>3.16%</span><div class="bar"><div class="bf c-b" style="width:3.16%"></div></div></div></td></tr>
+    <tr class="sub"><td>運費菜錢（現金）</td><td>40,000</td><td></td><td><div class="bw"><span>9.22%</span><div class="bar"><div class="bf c-b" style="width:9.22%"></div></div></div></td></tr>
+    <tr class="sub"><td>設備／系統（官網分期＋開拍）</td><td>11,260</td><td></td><td><div class="bw"><span>2.59%</span><div class="bar"><div class="bf c-b" style="width:2.59%"></div></div></div></td></tr>
+    <tr class="sub"><td>油費 $1,866 ／ 行銷競品 $1,615 ／ 物流 $493</td><td>3,974</td><td></td><td></td></tr>
+    <tr class="total-row"><td>⑥ 加總營業成本</td><td>319,736</td><td>31.9736w</td><td style="font-family:var(--mono)">73.69%</td></tr>
+    <tr class="net-row"><td>⑦ 淨　利　✓</td><td>114,152</td><td>11.4152w</td><td style="font-family:var(--mono);font-size:15px;font-weight:700">26.31%</td></tr>
+  </tbody>
+</table>
+
+<div class="freight">
+  <div class="fi"><div class="fi-l">物流實收運費（成本）</div><div class="fi-v">$45,018</div><div class="fi-n">已含於菜錢成本中</div></div>
+  <div class="fi"><div class="fi-l">消費者付運費（B）</div><div class="fi-v">$35,190</div><div class="fi-n">計入營收</div></div>
+  <div class="fi"><div class="fi-l">免運補貼（A-B）</div><div class="fi-v pos">$9,828</div><div class="fi-n">0.9828w｜佔商品營收 2.53%</div></div>
+  <div class="fc">✓ 免運補貼為行銷費用，已含於成本中，不另計列。</div>
+</div>
+
+<div class="sec" style="margin-top:26px"><div class="sec-n">Ⅱ</div><div class="sec-t">本月診斷</div><div class="sec-r"></div></div>
+<div class="diag">
+  <div class="dc ok"><div class="dc-tag">✓ 健康</div><div class="dc-num">73.36%</div><div class="dc-title">毛利率優良</div><div class="dc-body">食材佔比僅 23%，產品定價結構健康，銷貨成本在可控範圍。</div></div>
+  <div class="dc warn"><div class="dc-tag">⚠ 留意</div><div class="dc-num">31.16%</div><div class="dc-title">人事佔比偏高</div><div class="dc-body">薪資 $135,200 為最大單一成本，已較 1 月壓力值改善，持續觀察。</div></div>
+  <div class="dc ok"><div class="dc-tag">✓ 盈利</div><div class="dc-num">26.31%</div><div class="dc-title">淨利率健康</div><div class="dc-body">本月淨利 $114,152，整體財務表現穩定，方向正確。</div></div>
+</div>
+
+<div class="folio"><span>三明治自己來 SANDWICH.STORE</span><span>2026.03 MONTHLY REPORT</span><span>TW + HK CONSOLIDATED</span></div>
+</div><!-- end page-mar -->
+
+
+<!-- ══════════════════════════════════════════════
+  3–4月對比分析
+══════════════════════════════════════════════ -->
+<div class="page" id="page-cmp">
+<div class="compare-header">
+  <div class="ch-eye">雙月對比分析</div>
+  <div class="ch-title">3月 vs 4月</div>
+  <div class="ch-sub">三明治自己來 ｜ 2026年第一季後段觀察</div>
+</div>
+
+<div class="sec"><div class="sec-n">Ⅰ</div><div class="sec-t">關鍵指標對比</div><div class="sec-r"></div></div>
+
+<div class="delta-grid">
+  <div class="delta-card">
+    <div class="delta-label">營收成長</div>
+    <div class="delta-val delta-up">+8.9%</div>
+    <div class="delta-note">$433,888 → $472,425</div>
+  </div>
+  <div class="delta-card">
+    <div class="delta-label">毛利率變化</div>
+    <div class="delta-val delta-up">+14.3%</div>
+    <div class="delta-note">73.36% → 87.68%</div>
+  </div>
+  <div class="delta-card">
+    <div class="delta-label">薪資佔比</div>
+    <div class="delta-val delta-up">-0.78%</div>
+    <div class="delta-note">31.16% → 30.38%</div>
+  </div>
+  <div class="delta-card">
+    <div class="delta-label">淨利成長</div>
+    <div class="delta-val delta-up">+78.9%</div>
+    <div class="delta-note">$114,152 → $204,319</div>
+  </div>
+</div>
+
+<div class="compare-grid">
+  <div class="cc">
+    <div class="cc-month">2026年 3月</div>
+    <div class="cc-row"><span>本期營收</span><span class="cc-val">$433,888（43.3888w）</span></div>
+    <div class="cc-row"><span>銷貨成本</span><span class="cc-val">$115,571（26.64%）</span></div>
+    <div class="cc-row"><span>毛利</span><span class="cc-val">$318,317（73.36%）</span></div>
+    <div class="cc-row"><span>薪資</span><span class="cc-val">$135,200（31.16%）</span></div>
+    <div class="cc-row"><span>運營費用</span><span class="cc-val">$68,965（15.89%）</span></div>
+    <div class="cc-row"><span>加總成本</span><span class="cc-val">$319,736（73.69%）</span></div>
+    <div class="cc-row"><span>淨利</span><span class="cc-val">$114,152（26.31%）</span></div>
+    <div class="cc-row"><span>免運補貼</span><span class="cc-val">$9,828（2.53%）</span></div>
+  </div>
+  <div class="cc now">
+    <div class="cc-month green">2026年 4月　▲ 全面成長</div>
+    <div class="cc-row"><span>本期營收</span><span class="cc-val">$472,425（47.2425w）▲ +8.9%</span></div>
+    <div class="cc-row"><span>銷貨成本</span><span class="cc-val">$58,211（12.32%）▼ 大降</span></div>
+    <div class="cc-row"><span>毛利</span><span class="cc-val">$414,214（87.68%）▲ +14.3%</span></div>
+    <div class="cc-row"><span>薪資</span><span class="cc-val">$143,500（30.38%）▼ 略降</span></div>
+    <div class="cc-row"><span>運營費用</span><span class="cc-val">$66,395（14.05%）▼ 略降</span></div>
+    <div class="cc-row"><span>加總成本</span><span class="cc-val">$268,106（56.75%）▼ -17%</span></div>
+    <div class="cc-row"><span>淨利</span><span class="cc-val">$204,319（43.25%）▲ +78.9%</span></div>
+    <div class="cc-row"><span>免運補貼</span><span class="cc-val">$14,947（3.16%）▲ 增加</span></div>
+  </div>
+</div>
+
+<div class="sec" style="margin-top:22px"><div class="sec-n">Ⅱ</div><div class="sec-t">亮點分析</div><div class="sec-r"></div></div>
+<div class="insight-box">
+  <div class="insight-title">📈 正向趨勢</div>
+  <ul class="insight-list">
+    <li>食材成本大幅下降：3月 $100,510（23.16%）→ 4月 $54,906（11.62%），主因 Dubai 系列產品結構優化，原料使用更精準。</li>
+    <li>淨利翻倍成長：從 $114,152 到 $204,319，增幅 +78.9%，是目前最佳月份。</li>
+    <li>毛利率突破 87%：反映產品定價與成本控制同步優化，是健康的訊號。</li>
+    <li>薪資佔比持續下降：隨營收成長自然攤薄，從 31.16% → 30.38%，方向正確。</li>
+    <li>HK 訂單穩定貢獻：三批次合計 $26,570，持續參與整體成長。</li>
+  </ul>
+</div>
+
+<div class="sec" style="margin-top:18px"><div class="sec-n">Ⅲ</div><div class="sec-t">需要注意的地方</div><div class="sec-r"></div></div>
+<div class="warn-box">
+  <div class="warn-title">⚠ 留意事項</div>
+  <ul class="warn-list">
+    <li>免運補貼上升：從 $9,828（2.53%）增至 $14,947（3.16%），隨訂單量成長需持續觀察，避免行銷成本失控。</li>
+    <li>薪資絕對值增加：雖佔比下降，但薪資從 $135,200 增至 $143,500（+$8,300），人事擴張需搭配營收持續成長。</li>
+    <li>設備系統費用偏高：4月 $25,094（含電費+紙箱漲價+官網分期），紙箱從 $8 漲到 $10 需留意包材成本趨勢。</li>
+    <li>3月銷貨成本異常高（26.64%）vs 4月（12.32%），差距過大需確認是否有食材結構調整或記帳差異。</li>
+  </ul>
+</div>
+
+<div class="sec" style="margin-top:18px"><div class="sec-n">Ⅳ</div><div class="sec-t">下期建議</div><div class="sec-r"></div></div>
+<div class="insight-box" style="border-left-color:var(--green)">
+  <div class="insight-title" style="color:var(--green)">🎯 5月重點方向</div>
+  <ul class="insight-list">
+    <li>維持食材成本在 15% 以下，Dubai 系列若繼續穩定，結構優勢可持續。</li>
+    <li>免運門檻可評估是否調整（例如提高至 $2,500），降低補貼壓力。</li>
+    <li>HK 訂單可嘗試主動開發，目前 3 筆已是穩定基礎，擴大有助攤薄固定成本。</li>
+    <li>薪資若持續增加，需確保每月營收同步成長至 50 萬以上，維持淨利率 40%+。</li>
+  </ul>
+</div>
+
+<div class="folio"><span>三明治自己來 SANDWICH.STORE</span><span>2026 Q1 COMPARISON REPORT</span><span>MAR vs APR</span></div>
+</div><!-- end page-cmp -->
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open');
+  btn.classList.toggle('open');
+  btn.querySelector('.acc-arrow').textContent = isOpen ? '▼' : '▲';
+  if (!isOpen) {
+    const txt = btn.querySelector('span:first-child');
+    txt.textContent = '收起明細';
+  } else {
+    const txt = btn.querySelector('span:first-child');
+    txt.textContent = '展開明細';
+  }
+}
+</script>
+</body>
+</html>
