@@ -334,6 +334,119 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
   </div>
 </div>
 
+
+<style id="report-slip-style">
+.rslip-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:var(--ink);color:white;border:none;cursor:pointer;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:20px;transition:background .2s}
+.rslip-btn:hover{background:var(--green)}
+#rslip-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:9000}
+#rslip-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;z-index:9999;padding:36px 44px;width:600px;max-width:96vw;max-height:94vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.rclose-btn{position:absolute;top:14px;right:16px;background:none;border:none;cursor:pointer;font-size:18px;color:#999}
+.rclose-btn:hover{color:#333}
+/* 列印版樣式 */
+.r-co{font-size:13px;font-weight:700;margin-bottom:2px}
+.r-info{font-size:10.5px;color:#666;margin-bottom:14px;line-height:1.8}
+.r-title{font-size:15px;font-weight:700;text-align:center;border-top:2px solid #000;border-bottom:2px solid #000;padding:7px 0;margin:10px 0;letter-spacing:3px}
+.r-subtitle{font-size:11px;text-align:center;color:#555;margin-bottom:16px}
+.r-sec{font-size:10px;font-weight:700;color:#333;letter-spacing:2px;text-transform:uppercase;margin:14px 0 5px;padding-bottom:3px;border-bottom:1.5px solid #000}
+.r-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted #e0e0e0;font-size:12px}
+.r-row .lbl{color:#333}
+.r-row .sub-lbl{color:#666;font-size:11px;padding-left:16px}
+.r-row .amt{font-family:monospace;font-size:12px}
+.r-row .pct{font-family:monospace;font-size:11px;color:#888;min-width:52px;text-align:right}
+.r-subtotal{display:flex;justify-content:space-between;padding:5px 0;font-weight:700;border-top:1.5px solid #333;margin-top:3px;font-size:12.5px}
+.r-total{display:flex;justify-content:space-between;padding:8px 0;font-size:14px;font-weight:700;border-top:2px solid #000;border-bottom:2px solid #000;margin:4px 0}
+.r-net{display:flex;justify-content:space-between;padding:9px 0;font-size:15px;font-weight:700;border-top:2px solid #000;border-bottom:2px solid #000;margin:4px 0}
+.r-pending{color:#bbb;font-style:italic}
+.r-footer{font-size:10px;color:#888;margin-top:20px;line-height:2;border-top:1px solid #ddd;padding-top:12px}
+.r-sign{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px;font-size:11px}
+.r-sign-box{border-top:1px solid #333;padding-top:4px;text-align:center;color:#555}
+.rprint-row{display:flex;gap:10px;margin-top:20px}
+.rprint-btn{flex:1;padding:9px;background:#0f1923;color:white;border:none;cursor:pointer;font-size:11px;font-weight:700;letter-spacing:1px}
+.rprint-btn:hover{background:#2a4a6b}
+.rcancel-btn{padding:9px 16px;background:none;border:1px solid #ccc;cursor:pointer;font-size:11px;color:#666}
+@media print{
+  body>*:not(#rslip-modal){display:none!important}
+  #rslip-modal{display:block!important;position:static!important;transform:none!important;box-shadow:none!important;padding:20px!important;width:100%!important;max-height:none!important}
+  .rclose-btn,.rprint-row{display:none!important}
+  #rslip-overlay{display:none!important}
+}
+</style>
+
+<button class="rslip-btn" onclick="document.getElementById('rslip-overlay').style.display='block';document.getElementById('rslip-modal').style.display='block'">
+  🖨&nbsp;&nbsp;列印月度財報
+</button>
+
+<div id="rslip-overlay" onclick="closeRslip()"></div>
+<div id="rslip-modal">
+  <button class="rclose-btn" onclick="closeRslip()">✕</button>
+
+  <div class="r-co">拾起百味有限公司</div>
+  <div class="r-info">
+    統一編號：60493910　｜　台中市東勢區102巷66號<br>
+    電話：09-159-54954
+  </div>
+
+  <div class="r-title">月　度　損　益　表</div>
+  <div class="r-subtitle">
+    2026年4月（結算區間：2026年3月1日 ～ 3月31日）<br>
+    幣別：新台幣（NT$）
+  </div>
+
+  <div class="r-sec">一、營業收入</div>
+  <div class="r-row"><span class="lbl">商品銷售收入（TW + HK）</span><span style="display:flex;gap:12px"><span class="pct">100.00%</span><span class="amt">$472,425</span></span></div>
+  <div class="r-row"><span class="sub-lbl">其中：消費者付運費（B系統）</span><span style="display:flex;gap:12px"><span class="pct">5.62%</span><span class="amt">$26,543</span></span></div>
+  <div class="r-subtotal"><span>營業收入合計</span><span>$472,425</span></div>
+
+  <div class="r-sec">二、銷貨成本</div>
+  <div class="r-row"><span class="lbl">食材／原料</span><span style="display:flex;gap:12px"><span class="pct">11.62%</span><span class="amt">$54,906</span></span></div>
+  <div class="r-row"><span class="lbl">包材／耗材</span><span style="display:flex;gap:12px"><span class="pct">0.70%</span><span class="amt">$3,305</span></span></div>
+  <div class="r-row"><span class="lbl">運費補貼（A $41,490 − B $26,543）</span><span style="display:flex;gap:12px"><span class="pct">3.16%</span><span class="amt">$14,947</span></span></div>
+  <div class="r-subtotal"><span>銷貨成本合計</span><span>$73,158</span></div>
+
+  <div class="r-total"><span>毛利　Gross Profit</span><span style="display:flex;gap:12px"><span class="pct" style="color:#1a6b3a;font-weight:700">84.51%</span><span>$399,267</span></span></div>
+
+  <div class="r-sec">三、營業費用</div>
+  <div class="r-row"><span class="lbl">人事費用（薪資）</span><span style="display:flex;gap:12px"><span class="pct">30.38%</span><span class="amt">$143,500</span></span></div>
+  <div class="r-row"><span class="sub-lbl">運營主廚</span><span class="amt">$57,131</span></div>
+  <div class="r-row"><span class="sub-lbl">行政小編</span><span class="amt">$33,950</span></div>
+  <div class="r-row"><span class="sub-lbl">負責人</span><span class="amt">$46,178</span></div>
+  <div class="r-row"><span class="sub-lbl">小幫手</span><span class="amt">$6,000</span></div>
+  <div class="r-row" style="margin-top:6px"><span class="lbl">設備／系統費用</span><span style="display:flex;gap:12px"><span class="pct">5.31%</span><span class="amt">$25,094</span></span></div>
+  <div class="r-row"><span class="sub-lbl">電費＋紙箱費</span><span class="amt">$13,335</span></div>
+  <div class="r-row"><span class="sub-lbl">官網分期（第4期）</span><span class="amt">$11,000</span></div>
+  <div class="r-row"><span class="sub-lbl">手持攪拌機</span><span class="amt">$759</span></div>
+  <div class="r-row"><span class="lbl">運費菜錢（現金）</span><span style="display:flex;gap:12px"><span class="pct">4.23%</span><span class="amt">$20,000</span></span></div>
+  <div class="r-row"><span class="lbl">稅費／保費</span><span style="display:flex;gap:12px"><span class="pct">0.92%</span><span class="amt">$4,351</span></span></div>
+  <div class="r-row"><span class="sub-lbl">2月健保費 $2,177 ＋ 3月健保費 $2,174</span><span class="amt"></span></div>
+  <div class="r-row"><span class="lbl">油費／交通</span><span style="display:flex;gap:12px"><span class="pct">0.42%</span><span class="amt">$2,003</span></span></div>
+  <div class="r-subtotal"><span>營業費用合計</span><span>$194,948</span></div>
+
+  <div class="r-net"><span>本期淨利　Net Profit</span><span style="display:flex;gap:12px"><span class="pct" style="color:#1a6b3a;font-weight:700">43.25%</span><span>$204,319</span></span></div>
+
+  <div class="r-sec">四、備註</div>
+  <div class="r-row"><span class="lbl">期初現金餘額</span><span class="amt r-pending">（待填）</span></div>
+  <div class="r-row"><span class="lbl">期末現金餘額</span><span class="amt r-pending">（待填）</span></div>
+  <div class="r-row"><span class="lbl">庫存估值</span><span class="amt r-pending">（待填）</span></div>
+  <div class="r-row"><span class="lbl">業主本金</span><span class="amt r-pending">（待填）</span></div>
+  <div class="r-row"><span class="lbl">官網分期剩餘欠款</span><span class="amt r-pending">（待填）</span></div>
+
+  <div class="r-footer">
+    本報表依實際收支製作，結算區間為 2026年3月完整月，幣別新台幣。<br>
+    本報表僅供內部管理使用。
+  </div>
+  <div class="r-sign">
+    <div class="r-sign-box">負責人</div>
+    <div class="r-sign-box">製表人</div>
+  </div>
+
+  <div class="rprint-row">
+    <button class="rprint-btn" onclick="window.print()">🖨 列印 ／ 儲存 PDF</button>
+    <button class="rcancel-btn" onclick="closeRslip()">關閉</button>
+  </div>
+</div>
+<script>function closeRslip(){document.getElementById('rslip-overlay').style.display='none';document.getElementById('rslip-modal').style.display='none'}</script>
+
+
 <div class="folio"><span>三明治自己來 SANDWICH.STORE</span><span>2026.04 MONTHLY REPORT</span><span>TW + HK CONSOLIDATED</span></div>
 </div><!-- end page-apr -->
 
