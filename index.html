@@ -212,10 +212,12 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 <!-- 頂部導覽 -->
 <nav class="site-nav">
   <div class="site-brand">三明治自己來</div>
-  <button class="nav-tab active" onclick="showPage('jun')">6月財報</button>
+  <button class="nav-tab active" onclick="showPage('jul')">7月財報</button>
+  <button class="nav-tab" onclick="showPage('jun')">6月財報</button>
   <button class="nav-tab" onclick="showPage('may')">5月財報</button>
   <button class="nav-tab" onclick="showPage('apr')">4月財報</button>
   <button class="nav-tab" onclick="showPage('mar')">3月財報</button>
+  <button class="nav-tab compare-tab" onclick="showPage('cmp67')">6–7月對比分析</button>
   <button class="nav-tab compare-tab" onclick="showPage('cmp56')">5–6月對比分析</button>
   <button class="nav-tab compare-tab" onclick="showPage('cmp45')">4–5月對比分析</button>
   <button class="nav-tab compare-tab" onclick="showPage('cmp')">3–4月對比分析</button>
@@ -226,10 +228,223 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 
 
 
+
+<!-- ══ 7月財報 ══ -->
+<div class="page active" id="page-jul">
+<div class="masthead">
+  <div><div class="brand-eye">月度財務報告</div><div class="brand-name">三明治自己來</div></div>
+  <div class="meta"><strong>2026年7月</strong>台灣 TW ＋ 香港 HK<br>未稅口徑｜統計至 8/1</div>
+</div>
+
+<div class="kpi-band">
+  <div class="kpi accent">
+    <div class="kpi-label">本期總營收（未稅）</div><div class="kpi-value">$585,116</div>
+    <div class="kpi-sub">58.5116w｜100%</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">加總成本</div><div class="kpi-value">$430,664</div>
+    <div class="kpi-sub">73.60%</div>
+  </div>
+  <div class="kpi g-accent">
+    <div class="kpi-label">本期淨利</div><div class="kpi-value">$170,113</div>
+    <div class="kpi-sub">17.0113w｜29.07%</div><span class="kpi-badge">✅ 盈利</span>
+  </div>
+</div>
+
+<div class="sec"><div class="sec-n">Ⅰ</div><div class="sec-t">損益明細</div><div class="sec-r"></div></div>
+<table class="pnl">
+  <thead><tr><th style="width:44%">項目</th><th style="width:17%">金額 NT$</th><th style="width:12%">萬元</th><th>佔比</th></tr></thead>
+  <tbody>
+    <tr class="lbl"><td>① 本期營收（未稅）</td><td>585,116</td><td>58.5116w</td><td><div class="bw"><span>100.00%</span><div class="bar"><div class="bf c-g" style="width:100%"></div></div></div></td></tr>
+    <tr class="sub"><td>含稅金額 $614,372 ÷ 1.05</td><td>585,116</td><td></td><td></td></tr>
+    <tr class="sub"><td>　其中 B 系統運費（含於上）</td><td>40,730</td><td></td><td><div class="bw"><span>6.96%</span><div class="bar"><div class="bf c-b" style="width:6.61%"></div></div></div></td></tr>
+    <tr class="lbl" style="border-top:1.5px solid var(--rule)"><td>② 銷貨成本（直接成本）</td><td>211,127</td><td>20.9768w</td><td><div class="bw"><span>36.08%</span><div class="bar"><div class="bf c-r" style="width:36.08%"></div></div></div></td></tr>
+    <tr class="sub"><td>食材／原料</td><td>137,987</td><td></td><td><div class="bw"><span>23.58%</span><div class="bar"><div class="bf c-r" style="width:23.58%"></div></div></div></td></tr>
+    <tr class="sub"><td>包材／耗材</td><td>13,760</td><td></td><td><div class="bw"><span>2.35%</span><div class="bar"><div class="bf c-r" style="width:2.35%"></div></div></div></td></tr>
+    <tr class="sub"><td>運費補貼（A $60,938 − B $40,730）</td><td>20,208</td><td></td><td><div class="bw"><span>3.45%</span><div class="bar"><div class="bf c-r" style="width:3.45%"></div></div></div></td></tr>
+    <tr class="sub"><td>主廚直接人工（$55,000 × 60%）</td><td>33,000</td><td></td><td><div class="bw"><span>5.64%</span><div class="bar"><div class="bf c-r" style="width:5.64%"></div></div></div></td></tr>
+    <tr class="sub"><td>生產設備折舊（$370,300 ÷ 60月）</td><td>6,172</td><td></td><td><div class="bw"><span>1.05%</span><div class="bar"><div class="bf c-r" style="width:1.05%"></div></div></div></td></tr>
+    <tr class="sub"><td>廚房水電</td><td>0</td><td></td><td><div class="bw"><span>0%</span><div class="bar"><div class="bf c-r" style="width:0%"></div></div></div></td></tr>
+    <tr class="gross-row"><td>③ 毛　利</td><td>373,989</td><td>33.0378w</td><td><div class="bw"><span>63.92%</span><div class="bar"><div class="bf c-g" style="width:63.92%"></div></div></div></td></tr>
+    <tr class="lbl warn-row" style="border-top:1.5px solid var(--rule)"><td>④ 人事費用</td><td>130,667</td><td>13.0667w</td><td><div class="bw"><span>22.33%</span><div class="bar"><div class="bf c-b" style="width:22.33%"></div></div></div></td></tr>
+    <tr class="sub"><td>主廚行政部分（$55,000 × 40%）</td><td>22,000</td><td></td><td><div class="bw"><span>4.07%</span><div class="bar"><div class="bf c-b" style="width:4.07%"></div></div></div></td></tr>
+    <tr class="sub"><td>總監 / 小編 / 小幫手實付</td><td>108,667</td><td></td><td><div class="bw"><span>20.12%</span><div class="bar"><div class="bf c-b" style="width:20.12%"></div></div></div></td></tr>
+    
+    <tr class="lbl" style="border-top:1px solid var(--rule)"><td>⑤ 保費支出（勞健保）</td><td>28,544</td><td>2.8544w</td><td><div class="bw"><span>5.28%</span><div class="bar"><div class="bf c-b" style="width:5.28%"></div></div></div></td></tr>
+    <tr class="sub"><td>公司負擔勞保 / 健保 / 勞退</td><td>21,373</td><td></td><td><div class="bw"><span>3.96%</span><div class="bar"><div class="bf c-b" style="width:3.96%"></div></div></div></td></tr>
+    <tr class="sub"><td>林淑媛二代健保 ＋ 車子保養/保險÷2</td><td>7,171</td><td></td><td><div class="bw"><span>1.33%</span><div class="bar"><div class="bf c-b" style="width:1.33%"></div></div></div></td></tr>
+    <tr class="lbl" style="border-top:1px solid var(--rule)"><td>⑥ 其他費用</td><td>44,665</td><td>4.4665w</td><td><div class="bw"><span>7.63%</span><div class="bar"><div class="bf c-b" style="width:8.52%"></div></div></div></td></tr>
+    <tr class="sub"><td>影片製作設計費（旺兔工作室）</td><td>21,000</td><td></td><td><div class="bw"><span>3.89%</span><div class="bar"><div class="bf c-b" style="width:3.89%"></div></div></div></td></tr>
+    <tr class="sub"><td>官網分期第6次</td><td>11,000</td><td></td><td><div class="bw"><span>2.04%</span><div class="bar"><div class="bf c-b" style="width:2.04%"></div></div></div></td></tr>
+    <tr class="sub"><td>油費</td><td>3,049</td><td></td><td><div class="bw"><span>0.56%</span><div class="bar"><div class="bf c-b" style="width:0.56%"></div></div></div></td></tr>
+    <tr class="sub"><td>泰式慶功宴（員工福利）</td><td>7,176</td><td></td><td><div class="bw"><span>1.33%</span><div class="bar"><div class="bf c-b" style="width:1.33%"></div></div></div></td></tr>
+    <tr class="sub"><td>退款賠償</td><td>2,440</td><td></td><td><div class="bw"><span>0.45%</span><div class="bar"><div class="bf c-b" style="width:0.45%"></div></div></div></td></tr>
+    <tr class="total-row"><td>⑦ 加總營業成本</td><td>415,003</td><td>41.5003w</td><td style="font-family:var(--mono)">70.93%</td></tr>
+    <tr class="net-row"><td>⑧ 淨　利　✓</td><td>155,832</td><td>11.0841w</td><td style="font-family:var(--mono)">26.63%</td></tr>
+  </tbody>
+</table>
+
+<div class="freight">
+  <div class="fi"><div class="fi-l">A 物流實收運費</div><div class="fi-v">$60,938</div><div class="fi-n">實際付給物流商</div></div>
+  <div class="fi"><div class="fi-l">B 消費者付運費</div><div class="fi-v">$40,730</div><div class="fi-n">已含在營收中</div></div>
+  <div class="fi"><div class="fi-l">A-B 補貼（列入COGS）</div><div class="fi-v pos">$20,208</div><div class="fi-n">直接成本</div></div>
+</div>
+
+<div class="sec" style="margin-top:26px"><div class="sec-n">Ⅱ</div><div class="sec-t">稅費與保費</div><div class="sec-r"></div></div>
+<div class="diag">
+  <div class="dc ok"><div class="dc-tag">📋 建議提撥</div><div class="dc-num">$16,204</div><div class="dc-title">營所稅提撥（3%）</div><div class="dc-body">稅後可用淨利 $152,560（26.07%）。</div></div>
+  <div class="dc info"><div class="dc-tag">🔒 本月保費支出</div><div class="dc-num">$28,544</div><div class="dc-title">公司負擔勞保/健保/勞退＋二代健保＋車子÷2</div><div class="dc-body">公司負擔勞保/健保/勞退 $21,373（7/30繳6月份）＋林淑媛二代健保 $823＋車子保養/保險公司半額 $6,348。</div></div>
+  <div class="dc warn"><div class="dc-tag">🎉 員工福利</div><div class="dc-num">$7,176</div><div class="dc-title">泰式慶功宴</div><div class="dc-body">三姐代墊，已列入其他費用員工福利。</div></div>
+</div>
+
+<div class="sec" style="margin-top:26px"><div class="sec-n">Ⅲ</div><div class="sec-t">本月診斷</div><div class="sec-r"></div></div>
+<div class="diag">
+  <div class="dc warn"><div class="dc-tag">⚠️ 注意</div><div class="dc-num">23.58%</div><div class="dc-title">食材成本率偏高</div><div class="dc-body">目標≤20%，本月23.58%超標 $20,964。主因新品食材投入（榴槤泥、斑斕葉、芒果乾泰茶），8月需控管。</div></div>
+  <div class="dc warn"><div class="dc-tag">⚠️ 一次性</div><div class="dc-num">$27,348</div><div class="dc-title">本月特殊支出</div><div class="dc-body">影片製作費 $21,000（旺兔工作室）＋車子保養/保險公司半額 $6,348，扣除後正常化淨利約 $197,461（33.7%）。</div></div>
+  <div class="dc ok"><div class="dc-tag">✅ 持續</div><div class="dc-num">63.92%</div><div class="dc-title">毛利率較6月下滑</div><div class="dc-body">較6月74.96%下滑13.8%，食材成本是主因。持續監控，目標回到70%以上。</div></div>
+</div>
+
+
+<div class="sec" style="margin-top:26px"><div class="sec-n">Ⅲ</div><div class="sec-t">食材成本明細</div><div class="sec-r">目標 ≤20%｜本月 23.58% ⚠️</div></div>
+<div class="accordion">
+  <button class="acc-btn" onclick="this.parentElement.classList.toggle('open')">
+    <div><span>展開食材明細</span>
+      <div class="accordion-summary">共18筆｜裕軒×3批 $65,238｜醬村行 $32,769｜食材合計 <span style="color:var(--amber)">$137,987（23.58%）</span></div>
+    </div>
+    <span class="acc-arrow">▼</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-inner">
+      <div class="sub-head">▌ 食材逐筆明細</div>
+      <table class="rt">
+        <thead><tr><th>日期</th><th>品項</th><th>金額</th><th>佔食材%</th><th>代墊</th></tr></thead>
+        <tbody>
+          <tr><td>7/01</td><td>醬村行開心果泥</td><td>$11,000</td><td>7.97%</td><td>—</td></tr>
+          <tr><td>7/02</td><td>蝦皮開心果</td><td>$3,981</td><td>2.89%</td><td>✅</td></tr>
+          <tr><td>7/03</td><td>裕軒（第1批）</td><td>$28,748</td><td>20.83%</td><td>✅</td></tr>
+          <tr><td>7/03</td><td>茶粉</td><td>$5,365</td><td>3.89%</td><td>—</td></tr>
+          <tr><td>7/03</td><td>腰果雜糧</td><td>$3,450</td><td>2.50%</td><td>—</td></tr>
+          <tr><td>7/05</td><td>酥皮絲</td><td>$6,785</td><td>4.92%</td><td>—</td></tr>
+          <tr><td>7/13</td><td>小麥蛋白</td><td>$3,480</td><td>2.52%</td><td>✅</td></tr>
+          <tr><td>7/14</td><td>芒果乾</td><td>$678</td><td>0.49%</td><td>✅</td></tr>
+          <tr><td>7/14</td><td>芒果乾泰茶</td><td>$3,787</td><td>2.74%</td><td>✅</td></tr>
+          <tr><td>7/15</td><td>奶油乳酪</td><td>$8,650</td><td>6.27%</td><td>—</td></tr>
+          <tr><td>7/16</td><td>裕軒（第2批）</td><td>$14,000</td><td>10.15%</td><td>✅</td></tr>
+          <tr><td>7/20</td><td>酷澎棉花糖</td><td>$600</td><td>0.43%</td><td>—</td></tr>
+          <tr><td>7/20</td><td>開心果</td><td>$6,788</td><td>4.92%</td><td>✅</td></tr>
+          <tr><td>7/23</td><td>醬村行開心果</td><td>$11,000</td><td>7.97%</td><td>—</td></tr>
+          <tr><td>7/28</td><td>冷凍榴槤泥</td><td>$2,648</td><td>1.92%</td><td>—</td></tr>
+          <tr><td>7/28</td><td>斑斕葉</td><td>$820</td><td>0.59%</td><td>—</td></tr>
+          <tr><td>7/29</td><td>裕軒（第3批）</td><td>$22,490</td><td>16.30%</td><td>—</td></tr>
+          <tr><td>7/29</td><td>蝦皮食材</td><td>$3,717</td><td>2.69%</td><td>✅</td></tr>
+          <tr style="font-weight:700;background:var(--gray)"><td colspan="2">合計</td><td>$137,987</td><td>100%</td><td></td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:14px">▌ 按供應商分類</div>
+      <table class="rt">
+        <thead><tr><th>供應商</th><th>金額</th><th>佔食材%</th><th>佔未稅營收%</th></tr></thead>
+        <tbody>
+          <tr><td>裕軒（食材批發，×3批）</td><td>$65,238</td><td>47.3%</td><td>11.15%</td></tr>
+          <tr><td>醬村行開心果系列</td><td>$32,769</td><td>23.7%</td><td>5.60%</td></tr>
+          <tr><td>其他食材（酥皮絲/奶油乳酪/茶粉等）</td><td>$31,798</td><td>23.1%</td><td>5.43%</td></tr>
+          <tr><td>芒果乾系列</td><td>$4,465</td><td>3.2%</td><td>0.76%</td></tr>
+          <tr><td>蝦皮採購</td><td>$3,717</td><td>2.7%</td><td>0.64%</td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:14px">▌ 成本率檢討</div>
+      <table class="rt">
+        <thead><tr><th>項目</th><th>數字</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td>本月食材成本</td><td style="color:var(--amber);font-weight:700">$137,987（23.58%）</td><td>超過20%目標 $20,964</td></tr>
+          <tr><td>目標20%基準</td><td>$117,023</td><td>$585,116 × 20%</td></tr>
+          <tr><td>較6月增加</td><td>+$52,792（+62%）</td><td>6月食材 $85,195（13.10%）</td></tr>
+          <tr><td>主因</td><td colspan="2">裕軒3批合計$65,238＋醬村行$32,769，兩家佔71%</td></tr>
+          <tr><td>8月目標</td><td>食材≤$X × 20%</td><td>控管裕軒採購頻率，開心果系列依訂單量採購</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="sec" style="margin-top:26px"><div class="sec-n">Ⅳ</div><div class="sec-t">營收明細</div><div class="sec-r"></div></div>
+<div class="accordion">
+  <button class="acc-btn" onclick="this.parentElement.classList.toggle('open')">
+    <div><span>展開明細</span>
+      <div class="accordion-summary">預購4輪＋賣貨便5批＋HK3筆 &nbsp;|&nbsp; TW <span>$575,522</span> ／ HK <span>$38,850</span> ／ 總計 <span>$585,116</span>（未稅）</div>
+    </div>
+    <span class="acc-arrow">▼</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-inner">
+      <div class="sub-head">▌ 台灣預購單</div>
+      <table class="rt">
+        <thead><tr><th>次數</th><th>客單</th><th>營收金額</th><th>A 實運費</th><th>B 系統運費</th><th>件數</th><th>個數</th><th>備註</th></tr></thead>
+        <tbody>
+          <tr><td>補滿*1</td><td>$1,611</td><td>$49,938</td><td>$5,115</td><td>$3,060</td><td>31</td><td>319</td><td>0724_711</td></tr>
+          <tr><td>補滿*1-1</td><td>$2,466</td><td>$83,852</td><td>$6,405</td><td>$2,200</td><td>34</td><td>622</td><td>0725到貨</td></tr>
+          <tr><td>2</td><td>$1,591</td><td>$36,601</td><td>$3,795</td><td>$2,880</td><td>23</td><td>291</td><td>0731_711</td></tr>
+          <tr><td>2-2</td><td>$2,294</td><td>$36,703</td><td>$3,000</td><td>$1,000</td><td>16</td><td>197</td><td>0801到貨</td></tr>
+          <tr><td>3</td><td>$1,410</td><td>$18,324</td><td>$2,145</td><td>$1,440</td><td>13</td><td>115</td><td>0813_711</td></tr>
+          <tr><td>3-3</td><td>$2,340</td><td>$56,167</td><td>$4,800</td><td>$1,200</td><td>24</td><td>376</td><td>0814到貨 預估</td></tr>
+          <tr><td>4</td><td>$1,590</td><td>$34,970</td><td>$3,630</td><td>$1,980</td><td>22</td><td>243</td><td>0820_711（統計至8/1）</td></tr>
+          <tr><td>4-4</td><td>$2,368</td><td>$61,580</td><td>$5,200</td><td>$1,000</td><td>26</td><td>413</td><td>0821到貨（統計至8/1）</td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:14px">▌ 台灣賣貨便</div>
+      <table class="rt">
+        <thead><tr><th>批次</th><th>客單</th><th>營收金額</th><th>A 實運費</th><th>B 系統運費</th><th>件數</th><th>個數</th><th>備註</th></tr></thead>
+        <tbody>
+          <tr><td>626-33追加</td><td>$680</td><td>$680</td><td>$129</td><td>$0</td><td>1</td><td>5</td><td>7/1出貨</td></tr>
+          <tr><td>0703-34批</td><td>$885</td><td>$20,362</td><td>$2,967</td><td>$4,953</td><td>23</td><td>144</td><td>7/7出貨</td></tr>
+          <tr><td>0710-35批</td><td>$896</td><td>$39,428</td><td>$5,676</td><td>$5,095</td><td>44</td><td>274</td><td>7/12出貨</td></tr>
+          <tr><td>0717-36批</td><td>$1,054</td><td>$41,109</td><td>$5,031</td><td>$4,179</td><td>39</td><td>287</td><td>7/20出貨</td></tr>
+          <tr><td>0724-37批</td><td>$923</td><td>$42,441</td><td>$5,934</td><td>$5,598</td><td>46</td><td>306</td><td>7/27出貨</td></tr>
+          <tr><td>0731-38批</td><td>$998</td><td>$39,908</td><td>$5,160</td><td>$4,566</td><td>40</td><td>289</td><td>8/1出貨</td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:14px">▌ 台灣其他</div>
+      <table class="rt">
+        <thead><tr><th>項目</th><th>金額</th><th>備註</th></tr></thead>
+        <tbody>
+          <tr><td>數位配方包</td><td>$9,000</td><td>7/6*3 7/3*1 7/17*1</td></tr>
+          <tr><td>7/5開2回賞體驗課程</td><td>$0</td><td>酸奶洋蔥G*1</td></tr>
+          <tr><td>0713取消訂單</td><td class="text-red">-$2,020</td><td>-19個除詛咒*因子</td></tr>
+          <tr><td>阿姨兒子叫他來買</td><td>$260</td><td>7/13炸裂開心果</td></tr>
+          <tr><td>小豬同學7/3</td><td>$560</td><td>楊茜羽同學</td></tr>
+          <tr><td>小豬同學7/15</td><td>$820</td><td>7/15楊茜羽同學</td></tr>
+          <tr><td>另開賣場</td><td>$2,490</td><td>7/15馬來西亞健美</td></tr>
+          <tr><td>吃到毛理賠+交貨便</td><td class="text-red">-$420</td><td>0714蔡宜蓁</td></tr>
+          <tr><td>7/1林季穎</td><td>$200</td><td>公關</td></tr>
+          <tr><td>7/3香港atlass_y</td><td>$1,269</td><td>7/4-9來台</td></tr>
+          <tr><td>7/25上城開心果叔叔</td><td>$180</td><td>7/25現取2球</td></tr>
+          <tr><td>7/28施阿姨</td><td>$1,320</td><td>7/28自取</td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:14px">▌ 香港 HK</div>
+      <table class="rt">
+        <thead><tr><th>批次</th><th>營收金額</th><th>A 實運費</th><th>B 系統運費</th><th>件數</th><th>個數</th><th>備註</th></tr></thead>
+        <tbody>
+          <tr><td>HK-7-3</td><td>$7,230</td><td>$270</td><td>$290</td><td>1</td><td>58</td><td>7/27出 HunterGOR</td></tr>
+          <tr><td>HK-7-1</td><td>$24,080</td><td>$740</td><td>$870</td><td>3</td><td>141</td><td>7/1出 Fatmuiwante</td></tr>
+          <tr><td>HK-7-2</td><td>$7,540</td><td>$270</td><td>$290</td><td>1</td><td>60</td><td>7/13出 Cccccxhk</td></tr>
+        </tbody>
+      </table>
+      <div class="rt-summary">
+        TW 含稅 $575,522 ／ HK 含稅 $38,850 ／ 合計含稅 $614,372<br>
+        A實運費 $60,938 ／ B系統運費 $40,730 ／ A-B補貼 $20,208<br>
+        總件數 4,241件｜未稅營收 $585,116（÷1.05）
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="folio"><span>三明治自己來 SANDWICH.STORE</span><span>2026.07 MONTHLY REPORT</span><span>拾起百味有限公司 統編 60493910</span></div>
+</div><!-- end page-jul -->
+
 <!-- ══════════════════════════════════════════════
   6月財報
 ══════════════════════════════════════════════ -->
-<div class="page active" id="page-jun">
+<div class="page" id="page-jun">
 <div class="masthead">
   <div><div class="brand-eye">月度財務報告</div><div class="brand-name">三明治自己來</div></div>
   <div class="meta"><strong>2026年6月</strong>台灣 TW ＋ 香港 HK<br>未稅口徑｜統計至 6/30</div>
@@ -295,7 +510,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 <div class="sec" style="margin-top:26px"><div class="sec-n">Ⅱ</div><div class="sec-t">稅費與保費</div><div class="sec-r"></div></div>
 <div class="diag">
   <div class="dc ok"><div class="dc-tag">📋 建議提撥</div><div class="dc-num">$19,517</div><div class="dc-title">營所稅提撥（3%）</div><div class="dc-body">建議每月提撥至備用帳戶。稅後可用淨利 $287,048。</div></div>
-  <div class="dc info"><div class="dc-tag">🔒 每月固定</div><div class="dc-num">$14,281</div><div class="dc-title">勞健保公司負擔</div><div class="dc-body">主廚＋總監，公司每月固定支出。</div></div>
+  <div class="dc info"><div class="dc-tag">🔒 本月保費支出</div><div class="dc-num">$28,544</div><div class="dc-title">公司負擔勞保/健保/勞退＋二代健保＋車子÷2</div><div class="dc-body">公司負擔勞保/健保/勞退 $21,373（7/30繳6月份）＋林淑媛二代健保 $823＋車子保養/保險公司半額 $6,348。</div></div>
   <div class="dc info"><div class="dc-tag">💰 員工福利</div><div class="dc-num">$10,000</div><div class="dc-title">員工慶功宴</div><div class="dc-body">6月歷史新高慶功宴，全員福利，列入其他費用。</div></div>
 </div>
 
@@ -304,6 +519,147 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
   <div class="dc star"><div class="dc-tag">🎉 歷史新高</div><div class="dc-num">65.0567w</div><div class="dc-title">未稅營收突破65萬</div><div class="dc-body">較5月 $502,410 成長 +29.5%，較去年同期大幅躍升。</div></div>
   <div class="dc ok"><div class="dc-tag">✅ 達標</div><div class="dc-num">74.96%</div><div class="dc-title">毛利率維持目標</div><div class="dc-body">食材成本13.10%，控制在目標範圍內。成本口徑一致，可信度高。</div></div>
   <div class="dc ok"><div class="dc-tag">✅ 優秀</div><div class="dc-num">47.12%</div><div class="dc-title">淨利率創新高</div><div class="dc-body">淨利 $306,565，較5月 +40.4%。人事佔比降至22.37%，規模效益顯現。</div></div>
+</div>
+
+
+
+<div class="sec" style="margin-top:26px"><div class="sec-n">Ⅲ</div><div class="sec-t">食材成本明細</div><div class="sec-r">目標 ≤20%｜本月 23.58% ⚠️</div></div>
+<div class="accordion">
+  <button class="acc-btn" onclick="this.parentElement.classList.toggle('open')">
+    <div><span>展開食材明細</span>
+      <div class="accordion-summary">共18筆｜裕軒×3批 $65,238｜醬村行 $32,769｜食材合計 <span style="color:var(--amber)">$137,987（23.58%）</span></div>
+    </div>
+    <span class="acc-arrow">▼</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-inner">
+      <div class="sub-head">▌ 食材逐筆明細</div>
+      <table class="rt">
+        <thead><tr><th>日期</th><th>品項</th><th>金額</th><th>佔食材%</th><th>代墊</th></tr></thead>
+        <tbody>
+          <tr><td>7/01</td><td>醬村行開心果泥</td><td>$11,000</td><td>7.97%</td><td>—</td></tr>
+          <tr><td>7/02</td><td>蝦皮開心果</td><td>$3,981</td><td>2.89%</td><td>✅</td></tr>
+          <tr><td>7/03</td><td>裕軒（第1批）</td><td>$28,748</td><td>20.83%</td><td>✅</td></tr>
+          <tr><td>7/03</td><td>茶粉</td><td>$5,365</td><td>3.89%</td><td>—</td></tr>
+          <tr><td>7/03</td><td>腰果雜糧</td><td>$3,450</td><td>2.50%</td><td>—</td></tr>
+          <tr><td>7/05</td><td>酥皮絲</td><td>$6,785</td><td>4.92%</td><td>—</td></tr>
+          <tr><td>7/13</td><td>小麥蛋白</td><td>$3,480</td><td>2.52%</td><td>✅</td></tr>
+          <tr><td>7/14</td><td>芒果乾</td><td>$678</td><td>0.49%</td><td>✅</td></tr>
+          <tr><td>7/14</td><td>芒果乾泰茶</td><td>$3,787</td><td>2.74%</td><td>✅</td></tr>
+          <tr><td>7/15</td><td>奶油乳酪</td><td>$8,650</td><td>6.27%</td><td>—</td></tr>
+          <tr><td>7/16</td><td>裕軒（第2批）</td><td>$14,000</td><td>10.15%</td><td>✅</td></tr>
+          <tr><td>7/20</td><td>酷澎棉花糖</td><td>$600</td><td>0.43%</td><td>—</td></tr>
+          <tr><td>7/20</td><td>開心果</td><td>$6,788</td><td>4.92%</td><td>✅</td></tr>
+          <tr><td>7/23</td><td>醬村行開心果</td><td>$11,000</td><td>7.97%</td><td>—</td></tr>
+          <tr><td>7/28</td><td>冷凍榴槤泥</td><td>$2,648</td><td>1.92%</td><td>—</td></tr>
+          <tr><td>7/28</td><td>斑斕葉</td><td>$820</td><td>0.59%</td><td>—</td></tr>
+          <tr><td>7/29</td><td>裕軒（第3批）</td><td>$22,490</td><td>16.30%</td><td>—</td></tr>
+          <tr><td>7/29</td><td>蝦皮食材</td><td>$3,717</td><td>2.69%</td><td>✅</td></tr>
+          <tr style="font-weight:700;background:var(--gray)"><td colspan="2">合計</td><td>$137,987</td><td>100%</td><td></td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:14px">▌ 按供應商分類</div>
+      <table class="rt">
+        <thead><tr><th>供應商</th><th>金額</th><th>佔食材%</th><th>佔未稅營收%</th></tr></thead>
+        <tbody>
+          <tr><td>裕軒（食材批發，×3批）</td><td>$65,238</td><td>47.3%</td><td>11.15%</td></tr>
+          <tr><td>醬村行開心果系列</td><td>$32,769</td><td>23.7%</td><td>5.60%</td></tr>
+          <tr><td>其他食材（酥皮絲/奶油乳酪/茶粉等）</td><td>$31,798</td><td>23.1%</td><td>5.43%</td></tr>
+          <tr><td>芒果乾系列</td><td>$4,465</td><td>3.2%</td><td>0.76%</td></tr>
+          <tr><td>蝦皮採購</td><td>$3,717</td><td>2.7%</td><td>0.64%</td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:14px">▌ 成本率檢討</div>
+      <table class="rt">
+        <thead><tr><th>項目</th><th>數字</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td>本月食材成本</td><td style="color:var(--amber);font-weight:700">$137,987（23.58%）</td><td>超過20%目標 $20,964</td></tr>
+          <tr><td>目標20%基準</td><td>$117,023</td><td>$585,116 × 20%</td></tr>
+          <tr><td>較6月增加</td><td>+$52,792（+62%）</td><td>6月食材 $85,195（13.10%）</td></tr>
+          <tr><td>主因</td><td colspan="2">裕軒3批合計$65,238＋醬村行$32,769，兩家佔71%</td></tr>
+          <tr><td>8月目標</td><td>食材≤$X × 20%</td><td>控管裕軒採購頻率，開心果系列依訂單量採購</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="sec" style="margin-top:26px"><div class="sec-n">Ⅳ</div><div class="sec-t">營收明細</div><div class="sec-r"></div></div>
+<div class="accordion">
+  <button class="acc-btn" onclick="this.parentElement.classList.toggle('open')">
+    <div>
+      <span>展開明細</span>
+      <div class="accordion-summary">預購4輪＋賣貨便4批＋HK1筆 &nbsp;|&nbsp; TW <span>$676,525</span> ／ HK <span>$6,570</span> ／ 總計 <span>$650,567</span>（未稅）</div>
+    </div>
+    <span class="acc-arrow">▼</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-inner">
+      <div class="sub-head">▌ 台灣預購單</div>
+      <table class="rt">
+        <thead><tr><th>次數</th><th>客單</th><th>營收金額</th><th>A 實運費</th><th>B 系統運費</th><th>件數</th><th>個數</th><th>備註</th></tr></thead>
+        <tbody>
+          <tr><td>預購 1</td><td>$1,668</td><td>$55,039</td><td>$5,445</td><td>$3,780</td><td>33</td><td>396</td><td>0618_711到貨</td></tr>
+          <tr><td>預購 1-1</td><td>$2,160</td><td>$56,155</td><td>$4,345</td><td>$1,400</td><td>26</td><td>443</td><td>0619到貨</td></tr>
+          <tr><td>預購 2</td><td>$1,754</td><td>$31,566</td><td>$2,970</td><td>$1,440</td><td>18</td><td>254</td><td>0625_711</td></tr>
+          <tr><td>預購 2-2</td><td>$2,340</td><td>$93,588</td><td>$7,665</td><td>$2,000</td><td>40</td><td>704</td><td>0626到貨</td></tr>
+          <tr><td>預購 3</td><td>$1,667</td><td>$33,332</td><td>$3,300</td><td>$2,160</td><td>20</td><td>229</td><td>0703_711</td></tr>
+          <tr><td>預購 3-3</td><td>$2,051</td><td>$28,712</td><td>$2,530</td><td>$600</td><td>14</td><td>174</td><td>0704到貨</td></tr>
+          <tr><td>預購 4</td><td>$1,825</td><td>$74,830</td><td>$6,765</td><td>$3,240</td><td>41</td><td>554</td><td>0713_711</td></tr>
+          <tr><td>預購 4-4</td><td>$2,262</td><td>$88,216</td><td>$7,490</td><td>$1,800</td><td>39</td><td>649</td><td>0714到貨</td></tr>
+          <tr><td>0611加購</td><td>—</td><td>$3,665</td><td>$320</td><td>$0</td><td>—</td><td>—</td><td>0611*1 0612*1</td></tr>
+          <tr><td>6/3-5新增A</td><td>—</td><td>$700</td><td>$165</td><td>$165</td><td>—</td><td>—</td><td>0611_711到貨</td></tr>
+          <tr><td>6/3-5新增B</td><td>—</td><td>$2,800</td><td>$155</td><td>$0</td><td>—</td><td>—</td><td>0612到貨</td></tr>
+          <tr><td>6/5掛號</td><td>—</td><td>—</td><td>$44</td><td>$0</td><td>—</td><td>—</td><td>掛號信件</td></tr>
+          <tr><td>Karen Wu</td><td>—</td><td>$1,460</td><td>$0</td><td>$0</td><td>—</td><td>7</td><td>鄰居凱倫自取</td></tr>
+          <tr><td>6/17掛號</td><td>—</td><td>—</td><td>$92</td><td>$0</td><td>—</td><td>—</td><td>掛號信件</td></tr>
+          <tr><td>0618加購</td><td>—</td><td>$320</td><td>$0</td><td>$0</td><td>—</td><td>2</td><td>賣便品項加購</td></tr>
+          <tr><td>herher烘焙</td><td>—</td><td>$21,286</td><td>$0</td><td>$0</td><td>12</td><td>—</td><td>6/21協作 3800*12/2對分</td></tr>
+          <tr><td>herher面交</td><td>—</td><td>$1,550</td><td>$0</td><td>$0</td><td>2</td><td>12</td><td>學員2位</td></tr>
+          <tr><td>數位配方包</td><td>—</td><td>$1,800</td><td>—</td><td>$0</td><td>1</td><td>—</td><td>6/3*1</td></tr>
+          <tr><td>芒果哥</td><td>—</td><td>$350</td><td>$0</td><td>$0</td><td>1</td><td>5</td><td>芒果哥</td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:14px">▌ 台灣賣貨便</div>
+      <table class="rt">
+        <thead><tr><th>批次</th><th>客單</th><th>營收金額</th><th>A 實運費</th><th>B 系統運費</th><th>件數</th><th>個數</th><th>出貨日</th></tr></thead>
+        <tbody>
+          <tr><td>0605-30批</td><td>$1,049</td><td>$43,029</td><td>$5,289</td><td>$4,539</td><td>41</td><td>323</td><td>6/9(二)出貨</td></tr>
+          <tr><td>0612-31批</td><td>$877</td><td>$35,970</td><td>$5,289</td><td>$4,953</td><td>41</td><td>284</td><td>6/14(日)出貨</td></tr>
+          <tr><td>0619-32批</td><td>$928</td><td>$42,665</td><td>$5,934</td><td>$5,460</td><td>46</td><td>301</td><td>6/21(日)出貨</td></tr>
+          <tr><td>0626-33批</td><td>$1,083</td><td>$56,291</td><td>$6,708</td><td>$5,589</td><td>52</td><td>286</td><td>6/29(一)出貨</td></tr>
+          <tr><td>32回退貨</td><td>—</td><td>$258</td><td>$100</td><td>$0</td><td>2</td><td>7</td><td>6/28出</td></tr>
+          <tr><td>0624吃到讓發</td><td>—</td><td>$155</td><td>$0</td><td>$0</td><td>1</td><td>—</td><td>陳怡鳳0529批</td></tr>
+          <tr><td>30回賣貨便</td><td>—</td><td class="text-red">-$1,469</td><td>$100</td><td>$0</td><td>1</td><td>—</td><td>黃文昭未取退回</td></tr>
+          <tr><td>理賠加購</td><td>—</td><td>$880</td><td>$129</td><td>$0</td><td>1</td><td>7</td><td>6/9地板磁盒破壞補貨</td></tr>
+          <tr><td>26回小禮</td><td>—</td><td>$0</td><td>$129</td><td>$0</td><td>1</td><td>6</td><td>6/9花補胡吃補貼慶善積</td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:14px">▌ 台灣面交／寄出</div>
+      <table class="rt">
+        <thead><tr><th>日期</th><th>金額</th><th>備註</th></tr></thead>
+        <tbody>
+          <tr><td>6/12面交</td><td>$1,090</td><td>6/11錢予婕的同學</td></tr>
+          <tr><td>6/15寄出</td><td>$1,350</td><td>6/15 HEFinky little girl，共8個</td></tr>
+          <tr><td>6/17面交</td><td>$1,000</td><td>6/17錢予婕</td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:14px">▌ 香港 HK</div>
+      <table class="rt">
+        <thead><tr><th>批次</th><th>營收金額</th><th>A 實運費</th><th>B 系統運費</th><th>件數</th><th>個數</th><th>備註</th></tr></thead>
+        <tbody>
+          <tr><td>HK-6-1</td><td>$6,570</td><td>$270</td><td>$290</td><td>1</td><td>48</td><td>6/15(一)出 FatmuiWante</td></tr>
+          <tr><td>HK-6-2</td><td colspan="5">—</td><td>5/27(三)出 Ccccxhk（下月結算）</td></tr>
+          <tr><td>HK-6-3</td><td colspan="5">—</td><td>5/27(三)出 CccccxHK（下月結算）</td></tr>
+        </tbody>
+      </table>
+      <div class="rt-summary">
+        TW 含稅 $676,525 ／ HK 含稅 $6,570 ／ 合計含稅 $683,095<br>
+        A實運費 $65,676 ／ B系統運費 $37,416 ／ A-B補貼 $28,260<br>
+        總件數 4,719件｜未稅營收 $650,567（÷1.05）
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="folio"><span>三明治自己來 SANDWICH.STORE</span><span>2026.06 MONTHLY REPORT</span><span>拾起百味有限公司 統編 60493910</span></div>
@@ -840,6 +1196,100 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 
 
 
+
+<!-- ══ 6–7月對比 ══ -->
+<div class="page" id="page-cmp67">
+<div class="compare-header">
+  <div class="ch-eye">雙月對比分析</div>
+  <div class="ch-title">6月 vs 7月</div>
+  <div class="ch-sub">三明治自己來 ｜ 2026年第三季對比觀察｜未稅口徑</div>
+</div>
+
+<div class="sec"><div class="sec-n">Ⅰ</div><div class="sec-t">關鍵指標對比</div><div class="sec-r"></div></div>
+<div class="delta-grid">
+  <div class="delta-card">
+    <div class="delta-label">營收變化</div>
+    <div class="delta-val delta-down">-10.1%</div>
+    <div class="delta-note">$650,567 → $585,116</div>
+  </div>
+  <div class="delta-card">
+    <div class="delta-label">毛利率變化</div>
+    <div class="delta-val delta-down">-11.04%</div>
+    <div class="delta-note">74.96% → 63.92%</div>
+  </div>
+  <div class="delta-card">
+    <div class="delta-label">食材成本率</div>
+    <div class="delta-val delta-down">+10.48%</div>
+    <div class="delta-note">13.10% → 23.58% ⚠️</div>
+  </div>
+  <div class="delta-card">
+    <div class="delta-label">淨利變化</div>
+    <div class="delta-val delta-down">-49.6%</div>
+    <div class="delta-note">$306,565 → $154,452</div>
+  </div>
+</div>
+
+<div class="compare-grid">
+  <div class="cc">
+    <div class="cc-month">2026年 6月</div>
+    <div class="cc-row"><span>未稅營收</span><span class="cc-val">$650,567（65.0567w）</span></div>
+    <div class="cc-row"><span>銷貨成本</span><span class="cc-val">$162,889（25.04%）</span></div>
+    <div class="cc-row"><span>食材成本</span><span class="cc-val">$85,195（13.10%）✅</span></div>
+    <div class="cc-row"><span>毛利</span><span class="cc-val">$487,678（74.96%）</span></div>
+    <div class="cc-row"><span>人事費用</span><span class="cc-val">$145,532（22.37%）</span></div>
+    <div class="cc-row"><span>保費支出</span><span class="cc-val">—</span></div>
+    <div class="cc-row"><span>其他費用</span><span class="cc-val">$35,581（5.47%）</span></div>
+    <div class="cc-row"><span>淨利</span><span class="cc-val">$306,565（47.12%）</span></div>
+    <div class="cc-row"><span>運費補貼</span><span class="cc-val">$28,260（A$65,676-B$37,416）</span></div>
+  </div>
+  <div class="cc now">
+    <div class="cc-month" style="color:var(--amber)">2026年 7月　▼ 食材超標</div>
+    <div class="cc-row"><span>未稅營收</span><span class="cc-val">$585,116（58.5116w）▼ -10.1%</span></div>
+    <div class="cc-row"><span>銷貨成本</span><span class="cc-val">$211,127（36.08%）▼ +11.04%</span></div>
+    <div class="cc-row"><span>食材成本</span><span class="cc-val" style="color:var(--red)">$137,987（23.58%）❌ +10.48%</span></div>
+    <div class="cc-row"><span>毛利</span><span class="cc-val">$373,989（63.92%）▼ -11.04%</span></div>
+    <div class="cc-row"><span>人事費用</span><span class="cc-val">$130,667（22.33%）▼</span></div>
+    <div class="cc-row"><span>保費支出</span><span class="cc-val">$28,544（4.88%）公司勞健退＋車子</span></div>
+    <div class="cc-row"><span>其他費用</span><span class="cc-val">$44,665（7.63%）含影片$21,000</span></div>
+    <div class="cc-row"><span>淨利</span><span class="cc-val">$170,113（29.07%）▼ -44.5%</span></div>
+    <div class="cc-row"><span>運費補貼</span><span class="cc-val">$20,208（A$60,938-B$40,730）</span></div>
+  </div>
+</div>
+
+<div class="sec" style="margin-top:22px"><div class="sec-n">Ⅱ</div><div class="sec-t">淨利下滑原因分析</div><div class="sec-r"></div></div>
+<div class="insight-box" style="border-left-color:var(--amber)">
+  <div class="insight-title" style="color:var(--amber)">⚠️ 主因：食材成本暴增 +$52,792</div>
+  <ul class="insight-list">
+    <li>食材從 $85,195（13.10%）→ $137,987（23.58%），增加 +62%，是本月淨利下滑最大元兇。</li>
+    <li>裕軒×3批 $65,238＋醬村行開心果系列 $32,769，兩家合計 $98,007（佔食材71%）。</li>
+    <li>特殊支出：影片製作費 $21,000（一次性）＋車子保養/保險公司半額 $6,348。</li>
+    <li>扣除特殊支出 $27,348，正常化淨利約 <strong>$197,461（33.7%）</strong>。</li>
+  </ul>
+</div>
+
+<div class="sec" style="margin-top:18px"><div class="sec-n">Ⅲ</div><div class="sec-t">最需要關注</div><div class="sec-r"></div></div>
+<div class="warn-box">
+  <div class="warn-title">🚨 食材成本率 23.58%，超過20%目標 $20,964</div>
+  <ul class="warn-list">
+    <li>6月食材率 13.10%（優秀）→ 7月 23.58%（超標），主因大量採購開心果系列及裕軒備貨。</li>
+    <li>新品食材（榴槤泥、斑斕葉、芒果乾泰茶）拉高成本，需評估定價是否反映成本。</li>
+    <li>8月目標：裕軒採購控制在 $50,000 以內，開心果系列依訂單量採購，勿提前囤貨。</li>
+  </ul>
+</div>
+
+<div class="sec" style="margin-top:18px"><div class="sec-n">Ⅳ</div><div class="sec-t">8月重點目標</div><div class="sec-r"></div></div>
+<div class="insight-box" style="border-left-color:var(--green)">
+  <div class="insight-title" style="color:var(--green)">🎯 8月方向</div>
+  <ul class="insight-list">
+    <li>未稅營收目標：$620,000+，回到6月水準以上。</li>
+    <li>食材成本率目標：≤20%，即食材控制在 $124,000 以內（$620k×20%）。</li>
+    <li>保費支出：依當月勞健保通知繳付，金額以政府開單為準。</li>
+    <li>一次性費用已消化，8月費用結構回正常。</li>
+  </ul>
+</div>
+
+<div class="folio"><span>三明治自己來 SANDWICH.STORE</span><span>2026 COMPARISON REPORT</span><span>JUN vs JUL</span></div>
+</div><!-- end page-cmp67 -->
 <!-- ══════════════════════════════════════════════
   5–6月對比分析
 ══════════════════════════════════════════════ -->
