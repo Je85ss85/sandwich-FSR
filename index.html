@@ -30,6 +30,17 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
   position:sticky;
   top:0;
   z-index:100;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-color:rgba(255,255,255,.35) transparent;
+}
+.site-nav::-webkit-scrollbar{height:4px}
+.site-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.35);border-radius:2px}
+@media (max-width:900px){
+  .site-nav{padding:0 16px}
+  .site-brand{padding:14px 14px 14px 0;font-size:13px;flex-shrink:0}
+  .nav-tab{padding:14px 12px;font-size:10px;flex-shrink:0}
+  .nav-note{display:none}
 }
 .site-brand {
   font-family:var(--serif);
@@ -206,21 +217,52 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 /* ── 頁腳 ── */
 .folio{margin-top:40px;padding-top:10px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-size:9px;color:#bbb;font-family:var(--mono)}
 </style>
+<style>
+/* ---- summary mode ---- */
+body.summary-mode .page .pnl,
+body.summary-mode .page .diag,
+body.summary-mode .page .accordion,
+body.summary-mode .page .freight,
+body.summary-mode .page .warn-box,
+body.summary-mode .page .insight-box,
+body.summary-mode .page .compare-grid,
+body.summary-mode .page .delta-grid,
+body.summary-mode .page table.rt,
+body.summary-mode .page .rt-summary,
+body.summary-mode .page .sec,
+body.summary-mode .page .compare-header{display:none!important}
+body.summary-mode .page .month-summary{display:block!important}
+.month-summary{display:none;margin-top:8px}
+.ms-card{border:1px solid var(--rule);background:#fff;padding:16px 20px;font-family:var(--mono);font-size:13px;line-height:2.3;color:var(--ink)}
+.ms-block{border:1px solid var(--rule);padding:14px 16px;margin-top:10px}
+.ms-block .ms-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px}
+.ms-block .ms-body{font-size:11.5px;line-height:1.9;color:#333}
+.ms-pending{border-left:3px solid var(--amber);background:var(--amber-lt)}
+.ms-pending .ms-title{color:var(--amber)}
+.ms-done{border-left:3px solid var(--green);background:var(--green-lt)}
+.ms-done .ms-title{color:var(--green)}
+.summary-toggle{background:none;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.75);font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:1.5px;padding:7px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0;margin-left:10px}
+.summary-toggle:hover{border-color:rgba(255,255,255,.6);color:white}
+.summary-toggle.on{background:white;color:var(--ink);border-color:white}
+</style>
 </head>
 <body>
 
 <!-- 頂部導覽 -->
 <nav class="site-nav">
   <div class="site-brand">三明治自己來</div>
-  <button class="nav-tab active" onclick="showPage('jul')">7月財報</button>
+  <button class="nav-tab active" onclick="showPage('aug')">8月財報</button>
+  <button class="nav-tab" onclick="showPage('jul')">7月財報</button>
   <button class="nav-tab" onclick="showPage('jun')">6月財報</button>
   <button class="nav-tab" onclick="showPage('may')">5月財報</button>
   <button class="nav-tab" onclick="showPage('apr')">4月財報</button>
   <button class="nav-tab" onclick="showPage('mar')">3月財報</button>
+  <button class="nav-tab compare-tab" onclick="showPage('cmp78')">7–8月對比分析</button>
   <button class="nav-tab compare-tab" onclick="showPage('cmp67')">6–7月對比分析</button>
   <button class="nav-tab compare-tab" onclick="showPage('cmp56')">5–6月對比分析</button>
   <button class="nav-tab compare-tab" onclick="showPage('cmp45')">4–5月對比分析</button>
   <button class="nav-tab compare-tab" onclick="showPage('cmp')">3–4月對比分析</button>
+  <button class="summary-toggle" id="summaryToggleBtn" onclick="toggleSummary(this)">📄 只看摘要</button>
   <div class="nav-spacer"></div>
   <button class="nav-tab" style="color:#8b6914;border-bottom:2px solid transparent" onclick="showPage('std')">📋 成本標準</button>
   <div class="nav-note">2026 財務報告</div>
@@ -229,8 +271,164 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 
 
 
+<!-- ══ 8月財報 ══ -->
+<div class="page active" id="page-aug">
+<div class="masthead">
+  <div><div class="brand-eye">月度財務報告</div><div class="brand-name">三明治自己來</div></div>
+  <div class="meta"><strong>2026年8月</strong>台灣 TW ＋ 香港 HK<br>未稅口徑｜統計至 8/31</div>
+</div>
+
+<div class="kpi-band">
+  <div class="kpi accent">
+    <div class="kpi-label">本期總營收（未稅）</div><div class="kpi-value">$567,241</div>
+    <div class="kpi-sub">56.7241w｜100%</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">加總成本</div><div class="kpi-value">$305,297</div>
+    <div class="kpi-sub">53.81%</div>
+  </div>
+  <div class="kpi g-accent">
+    <div class="kpi-label">本期淨利</div><div class="kpi-value">$261,944</div>
+    <div class="kpi-sub">26.1944w｜46.19%</div><span class="kpi-badge">✅ 盈利</span>
+  </div>
+</div>
+
+<div class="month-summary">
+  <div class="ms-card">✅ <strong>8月</strong> 未稅營收 <strong>$567,241</strong>｜毛利率 <strong>75.71%</strong>｜淨利 <strong>$261,944（46.19%）</strong></div>
+  <div class="ms-block ms-pending">
+    <div class="ms-title">⏳ 8月人事薪資</div>
+    <div class="ms-body">待9月結算才會發放（需主廚8月KPI/佳績自評、小編績效評分）。總監分紅可先預估：淨利$261,944落在$200k-$299k區間×5%≈$13,097，實際待其他三人項目一併確認後才正式結算總額。<br><span style="color:#888">＊本月財報淨利$261,944已定案，不受9月薪資結算結果影響（人事費用採上月實付數字入帳，詳見損益明細④）。</span></div>
+  </div>
+  <div class="ms-block ms-done">
+    <div class="ms-title">🔒 8月實際支出保費</div>
+    <div class="ms-body">7月份勞健保共 $18,517（8月繳）</div>
+  </div>
+</div>
+
+<div class="sec"><div class="sec-n">Ⅰ</div><div class="sec-t">損益明細</div><div class="sec-r"></div></div>
+<table class="pnl">
+  <thead><tr><th style="width:44%">項目</th><th style="width:17%">金額 NT$</th><th style="width:12%">萬元</th><th>佔比</th></tr></thead>
+  <tbody>
+    <tr class="lbl"><td>① 本期營收（未稅）</td><td>567,241</td><td>56.7241w</td><td><div class="bw"><span>100.00%</span><div class="bar"><div class="bf c-g" style="width:100%"></div></div></div></td></tr>
+    <tr class="sub"><td>含稅金額 $595,603 ÷ 1.05</td><td>567,241</td><td></td><td></td></tr>
+    <tr class="sub"><td>　其中 B 系統運費（含於上）</td><td>31,458</td><td></td><td><div class="bw"><span>5.55%</span><div class="bar"><div class="bf c-b" style="width:5.55%"></div></div></div></td></tr>
+    <tr class="lbl" style="border-top:1.5px solid var(--rule)"><td>② 銷貨成本（直接成本）</td><td>137,797</td><td>13.7797w</td><td><div class="bw"><span>24.29%</span><div class="bar"><div class="bf c-r" style="width:24.29%"></div></div></div></td></tr>
+    <tr class="sub"><td>食材／原料</td><td>49,565</td><td></td><td><div class="bw"><span>8.74%</span><div class="bar"><div class="bf c-r" style="width:8.74%"></div></div></div></td></tr>
+    <tr class="sub"><td>包材／耗材</td><td>3,390</td><td></td><td><div class="bw"><span>0.60%</span><div class="bar"><div class="bf c-r" style="width:0.60%"></div></div></div></td></tr>
+    <tr class="sub"><td>運費補貼（A-B $28,309 ＋ 7-11免運折抵 $7,611）</td><td>35,920</td><td></td><td><div class="bw"><span>6.33%</span><div class="bar"><div class="bf c-r" style="width:6.33%"></div></div></div></td></tr>
+    <tr class="sub"><td>主廚直接人工（$55,000 × 60%）</td><td>33,000</td><td></td><td><div class="bw"><span>5.82%</span><div class="bar"><div class="bf c-r" style="width:5.82%"></div></div></div></td></tr>
+    <tr class="sub"><td>生產設備折舊（$370,300 ÷ 60月）</td><td>6,172</td><td></td><td><div class="bw"><span>1.09%</span><div class="bar"><div class="bf c-r" style="width:1.09%"></div></div></div></td></tr>
+    <tr class="sub"><td>廚房水電（50%）</td><td>9,750</td><td></td><td><div class="bw"><span>1.72%</span><div class="bar"><div class="bf c-r" style="width:1.72%"></div></div></div></td></tr>
+    <tr class="gross-row"><td>③ 毛　利</td><td>429,444</td><td>42.9444w</td><td><div class="bw"><span>75.71%</span><div class="bar"><div class="bf c-g" style="width:75.71%"></div></div></div></td></tr>
+    <tr class="lbl warn-row" style="border-top:1.5px solid var(--rule)"><td>④ 人事費用</td><td>122,508</td><td>12.2508w</td><td><div class="bw"><span>21.60%</span><div class="bar"><div class="bf c-b" style="width:21.60%"></div></div></div></td></tr>
+    <tr class="sub"><td>主廚行政部分（$55,000 × 40%）</td><td>22,000</td><td></td><td><div class="bw"><span>3.88%</span><div class="bar"><div class="bf c-b" style="width:3.88%"></div></div></div></td></tr>
+    <tr class="sub"><td>總監 / 小編 / 小幫手實付（7月結算，8/13發放）</td><td>100,508</td><td></td><td><div class="bw"><span>17.72%</span><div class="bar"><div class="bf c-b" style="width:17.72%"></div></div></div></td></tr>
+    <tr class="lbl" style="border-top:1px solid var(--rule)"><td>⑤ 保費支出（勞健保）</td><td>19,302</td><td>1.9302w</td><td><div class="bw"><span>3.40%</span><div class="bar"><div class="bf c-b" style="width:3.40%"></div></div></div></td></tr>
+    <tr class="sub"><td>公司負擔勞保 / 健保 / 勞退（7月保費合計，8月繳）</td><td>18,517</td><td></td><td><div class="bw"><span>3.26%</span><div class="bar"><div class="bf c-b" style="width:3.26%"></div></div></div></td></tr>
+    <tr class="sub"><td>林淑媛二代健保（2.11% × $37,198）</td><td>785</td><td></td><td><div class="bw"><span>0.14%</span><div class="bar"><div class="bf c-b" style="width:0.14%"></div></div></div></td></tr>
+    <tr class="lbl" style="border-top:1px solid var(--rule)"><td>⑥ 其他費用</td><td>25,690</td><td>2.5690w</td><td><div class="bw"><span>4.53%</span><div class="bar"><div class="bf c-b" style="width:4.53%"></div></div></div></td></tr>
+    <tr class="sub"><td>系統（官網分期$11,000／烤盤等設備$4,435／其他）</td><td>18,114</td><td></td><td><div class="bw"><span>3.19%</span><div class="bar"><div class="bf c-b" style="width:3.19%"></div></div></div></td></tr>
+    <tr class="sub"><td>員工福利（吃飯）</td><td>2,400</td><td></td><td><div class="bw"><span>0.42%</span><div class="bar"><div class="bf c-b" style="width:0.42%"></div></div></div></td></tr>
+    <tr class="sub"><td>其他</td><td>5,176</td><td></td><td><div class="bw"><span>0.91%</span><div class="bar"><div class="bf c-b" style="width:0.91%"></div></div></div></td></tr>
+    <tr class="total-row"><td>⑦ 加總營業成本</td><td>305,297</td><td>30.5297w</td><td style="font-family:var(--mono)">53.81%</td></tr>
+    <tr class="net-row"><td>⑧ 淨　利　✓</td><td>261,944</td><td>26.1944w</td><td style="font-family:var(--mono)">46.19%</td></tr>
+  </tbody>
+</table>
+
+<div class="freight">
+  <div class="fi"><div class="fi-l">A 物流實收運費</div><div class="fi-v">$59,767</div><div class="fi-n">實際付給物流商</div></div>
+  <div class="fi"><div class="fi-l">B 消費者付運費</div><div class="fi-v">$31,458</div><div class="fi-n">已含在營收中</div></div>
+  <div class="fi"><div class="fi-l">A-B＋7-11免運補貼（列入COGS）</div><div class="fi-v pos">$35,920</div><div class="fi-n">A-B $28,309＋7-11折抵 $7,611</div></div>
+  <div class="fc">📌 另有現金支出 $30,000（8月第1回菜錢運費，用於實際運費＋食材採購），依總監確認已於現金流中支用完畢，不重複列入本月損益科目。</div>
+</div>
+
+<div class="sec" style="margin-top:26px"><div class="sec-n">Ⅱ</div><div class="sec-t">稅費與保費</div><div class="sec-r"></div></div>
+<div class="diag">
+  <div class="dc ok"><div class="dc-tag">📋 建議提撥</div><div class="dc-num">$7,858</div><div class="dc-title">營所稅提撥（3%）</div><div class="dc-body">淨利$261,944×3%。稅後可用淨利 $254,086（44.80%）。</div></div>
+  <div class="dc info"><div class="dc-tag">🔒 本月保費支出</div><div class="dc-num">$19,302</div><div class="dc-title">公司負擔勞健退＋林淑媛二代健保</div><div class="dc-body">公司負擔勞保/健保/勞退 $18,517（7月保費合計，8月繳）＋林淑媛二代健保 $785（2.11%×$37,198）。</div></div>
+  <div class="dc ok"><div class="dc-tag">👥 人事實付</div><div class="dc-num">$100,508</div><div class="dc-title">總監/小編/小幫手（7月結算，8/13發放）</div><div class="dc-body">主廚人工維持固定$55,000基準（COGS 60%+人事40%），不用實際薪資。</div></div>
+</div>
+
+<div class="sec" style="margin-top:26px"><div class="sec-n">Ⅲ</div><div class="sec-t">本月診斷</div><div class="sec-r"></div></div>
+<div class="diag">
+  <div class="dc ok"><div class="dc-tag">✅ 大幅改善</div><div class="dc-num">75.71%</div><div class="dc-title">毛利率回升</div><div class="dc-body">較7月63.92%大幅回升+11.79個百分點，優於75%目標，食材成本控制明顯改善。</div></div>
+  <div class="dc info"><div class="dc-tag">⚠️ 待覆核</div><div class="dc-num">8.74%</div><div class="dc-title">食材成本率異常偏低</div><div class="dc-body">遠低於7月23.58%、也低於13%一般目標。可能是本月採購週期偏移或部分食材尚未入帳，建議跟主廚/總監覆核一次，避免下月補登造成成本率忽高忽低。</div></div>
+  <div class="dc star"><div class="dc-tag">🎉 大幅成長</div><div class="dc-num">46.19%</div><div class="dc-title">淨利率創近期新高</div><div class="dc-body">淨利$261,944，較7月$170,113成長+54.0%，人事佔比21.60%亦優於7月22.33%。</div></div>
+</div>
+
+<div class="sec" style="margin-top:26px"><div class="sec-n">Ⅳ</div><div class="sec-t">食材成本明細</div><div class="sec-r">目標 ≤20%｜本月 8.74% ✅</div></div>
+<div class="accordion">
+  <button class="acc-btn" onclick="this.parentElement.classList.toggle('open')">
+    <div><span>展開食材明細</span>
+      <div class="accordion-summary">共9筆｜裕軒 $16,150｜奶油乳酪×3筆 $20,160｜食材合計 <span style="color:var(--green)">$49,565（8.74%）</span></div>
+    </div>
+    <span class="acc-arrow">▼</span>
+  </button>
+  <div class="accordion-body">
+    <div class="accordion-inner">
+      <div class="sub-head">▌ 食材逐筆明細</div>
+      <table class="rt">
+        <thead><tr><th>日期</th><th>供應商／品項</th><th>金額</th><th>佔食材%</th><th>代墊</th></tr></thead>
+        <tbody>
+          <tr><td>08/03</td><td>漢泰食材</td><td>$2,290</td><td>4.62%</td><td>—</td></tr>
+          <tr><td>08/08</td><td>泰茶蝦皮</td><td>$5,655</td><td>11.41%</td><td>✅</td></tr>
+          <tr><td>08/13</td><td>裕軒</td><td>$16,150</td><td>32.59%</td><td>✅</td></tr>
+          <tr><td>08/14</td><td>奶油乳酪</td><td>$8,640</td><td>17.43%</td><td>—</td></tr>
+          <tr><td>08/14</td><td>奶油乳酪</td><td>$5,760</td><td>11.62%</td><td>—</td></tr>
+          <tr><td>08/14</td><td>蝦皮蕃茄乾</td><td>$850</td><td>1.72%</td><td>✅</td></tr>
+          <tr><td>08/26</td><td>蝦皮材料</td><td>$1,400</td><td>2.82%</td><td>✅</td></tr>
+          <tr><td>08/26</td><td>小麥蛋白</td><td>$3,060</td><td>6.17%</td><td>✅</td></tr>
+          <tr><td>08/31</td><td>奶油乳酪2箱</td><td>$5,760</td><td>11.62%</td><td>—</td></tr>
+          <tr style="font-weight:700;background:var(--gray)"><td colspan="2">合計</td><td>$49,565</td><td>100%</td><td></td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:14px">▌ 按供應商分類</div>
+      <table class="rt">
+        <thead><tr><th>供應商</th><th>金額</th><th>佔食材%</th><th>佔未稅營收%</th></tr></thead>
+        <tbody>
+          <tr><td>奶油乳酪（×3筆）</td><td>$20,160</td><td>40.68%</td><td>3.55%</td></tr>
+          <tr><td>裕軒</td><td>$16,150</td><td>32.59%</td><td>2.85%</td></tr>
+          <tr><td>蝦皮（泰茶／蕃茄乾／材料，×3筆）</td><td>$7,905</td><td>15.95%</td><td>1.39%</td></tr>
+          <tr><td>小麥蛋白</td><td>$3,060</td><td>6.17%</td><td>0.54%</td></tr>
+          <tr><td>漢泰食材</td><td>$2,290</td><td>4.62%</td><td>0.40%</td></tr>
+        </tbody>
+      </table>
+      <div class="sub-head" style="margin-top:14px">▌ 成本率檢討</div>
+      <table class="rt">
+        <thead><tr><th>項目</th><th>數字</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td>本月食材成本</td><td style="color:var(--green);font-weight:700">$49,565（8.74%）</td><td>低於13%一般目標、遠低於20%警戒線</td></tr>
+          <tr><td>較7月減少</td><td>-$88,422（-64%）</td><td>7月食材 $137,987（23.58%）</td></tr>
+          <tr><td>主廚B食材達標獎金</td><td style="color:var(--green)">≤16%區間，$2,000（滿額）</td><td>依8.74%判定，落在最高獎金級距</td></tr>
+          <tr><td>提醒</td><td colspan="2">本月比率明顯偏低，建議跟主廚/總監覆核採購週期是否有漏登或延後入帳的食材</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="sec" style="margin-top:26px"><div class="sec-n">Ⅴ</div><div class="sec-t">營收明細</div><div class="sec-r"></div></div>
+<table class="rt">
+  <thead><tr><th>區域</th><th>營收（含稅）</th><th>A實運費</th><th>B系統運費</th><th>件數</th><th>個數</th></tr></thead>
+  <tbody>
+    <tr class="tw-sub"><td>台灣 TW</td><td>$574,073</td><td>$58,827</td><td>$30,298</td><td>373</td><td>3,901</td></tr>
+    <tr class="hk-sub"><td>香港 HK</td><td>$21,530</td><td>$940</td><td>$1,160</td><td>4</td><td>163</td></tr>
+    <tr class="grand"><td>合計</td><td>$595,603</td><td>$59,767</td><td>$31,458</td><td>377</td><td>4,064</td></tr>
+  </tbody>
+</table>
+<div class="rt-summary" style="margin-top:10px;font-size:11px;color:#666">
+  TW+HK 含稅 $595,603 ／ 未稅營收 $567,241（÷1.05）／ 7-11免運折抵 $7,611（僅TW，賣貨便免運券活動）<br>
+  總件數 377件｜總產出數 4,064個｜統計至 8/31<br>
+  <span style="color:var(--amber)">⚠️ 訂單／批次逐筆明細（如台灣預購8波次、賣貨便批次、HK個別訂單）尚未逐筆核對，暫以截圖總計列為準；若需要跟7月一樣的逐筆展開表，麻煩提供原始Excel/表格檔案而非截圖，避免手動判讀數字出錯。</span>
+</div>
+
+
+<div class="folio"><span>三明治自己來 SANDWICH.STORE</span><span>2026.08 MONTHLY REPORT</span><span>拾起百味有限公司 統編 60493910</span></div>
+</div><!-- end page-aug -->
+
+
 <!-- ══ 7月財報 ══ -->
-<div class="page active" id="page-jul">
+<div class="page" id="page-jul">
 <div class="masthead">
   <div><div class="brand-eye">月度財務報告</div><div class="brand-name">三明治自己來</div></div>
   <div class="meta"><strong>2026年7月</strong>台灣 TW ＋ 香港 HK<br>未稅口徑｜統計至 8/1</div>
@@ -1197,6 +1395,101 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 
 
 
+<!-- ══ 7–8月對比 ══ -->
+<div class="page" id="page-cmp78">
+<div class="compare-header">
+  <div class="ch-eye">雙月對比分析</div>
+  <div class="ch-title">7月 vs 8月</div>
+  <div class="ch-sub">三明治自己來 ｜ 2026年第三季對比觀察｜未稅口徑</div>
+</div>
+
+<div class="sec"><div class="sec-n">Ⅰ</div><div class="sec-t">關鍵指標對比</div><div class="sec-r"></div></div>
+<div class="delta-grid">
+  <div class="delta-card">
+    <div class="delta-label">營收變化</div>
+    <div class="delta-val delta-down">-3.1%</div>
+    <div class="delta-note">$585,116 → $567,241</div>
+  </div>
+  <div class="delta-card">
+    <div class="delta-label">毛利率變化</div>
+    <div class="delta-val delta-up">+11.79pp</div>
+    <div class="delta-note">63.92% → 75.71%</div>
+  </div>
+  <div class="delta-card">
+    <div class="delta-label">食材成本率</div>
+    <div class="delta-val delta-up">-14.84pp</div>
+    <div class="delta-note">23.58% → 8.74% ⚠️待覆核</div>
+  </div>
+  <div class="delta-card">
+    <div class="delta-label">淨利變化</div>
+    <div class="delta-val delta-up">+54.0%</div>
+    <div class="delta-note">$170,113 → $261,944</div>
+  </div>
+</div>
+
+<div class="compare-grid">
+  <div class="cc">
+    <div class="cc-month">2026年 7月</div>
+    <div class="cc-row"><span>未稅營收</span><span class="cc-val">$585,116（58.5116w）</span></div>
+    <div class="cc-row"><span>銷貨成本</span><span class="cc-val">$211,127（36.08%）</span></div>
+    <div class="cc-row"><span>食材成本</span><span class="cc-val" style="color:var(--red)">$137,987（23.58%）❌</span></div>
+    <div class="cc-row"><span>毛利</span><span class="cc-val">$373,989（63.92%）</span></div>
+    <div class="cc-row"><span>人事費用</span><span class="cc-val">$130,667（22.33%）</span></div>
+    <div class="cc-row"><span>保費支出</span><span class="cc-val">$28,544（4.88%）</span></div>
+    <div class="cc-row"><span>其他費用</span><span class="cc-val">$44,665（7.63%）含影片$21,000</span></div>
+    <div class="cc-row"><span>淨利</span><span class="cc-val">$170,113（29.07%）</span></div>
+    <div class="cc-row"><span>運費補貼</span><span class="cc-val">$20,208（A$60,938-B$40,730）</span></div>
+  </div>
+  <div class="cc now">
+    <div class="cc-month" style="color:var(--green)">2026年 8月　▲ 全面回升</div>
+    <div class="cc-row"><span>未稅營收</span><span class="cc-val">$567,241（56.7241w）▼ -3.1%</span></div>
+    <div class="cc-row"><span>銷貨成本</span><span class="cc-val">$137,797（24.29%）▼ -11.79pp</span></div>
+    <div class="cc-row"><span>食材成本</span><span class="cc-val" style="color:var(--green)">$49,565（8.74%）✅ -14.84pp</span></div>
+    <div class="cc-row"><span>毛利</span><span class="cc-val">$429,444（75.71%）▲ +11.79pp</span></div>
+    <div class="cc-row"><span>人事費用</span><span class="cc-val">$122,508（21.60%）▼</span></div>
+    <div class="cc-row"><span>保費支出</span><span class="cc-val">$19,302（3.40%）▼</span></div>
+    <div class="cc-row"><span>其他費用</span><span class="cc-val">$25,690（4.53%）▼ 無一次性支出</span></div>
+    <div class="cc-row"><span>淨利</span><span class="cc-val">$261,944（46.19%）▲ +54.0%</span></div>
+    <div class="cc-row"><span>運費補貼</span><span class="cc-val">$35,920（A-B$28,309+7-11$7,611）▲</span></div>
+  </div>
+</div>
+
+<div class="sec" style="margin-top:22px"><div class="sec-n">Ⅱ</div><div class="sec-t">淨利大幅成長原因分析</div><div class="sec-r"></div></div>
+<div class="insight-box">
+  <div class="insight-title">📈 主因：食材成本大幅回落 ＋ 無一次性支出</div>
+  <ul class="insight-list">
+    <li>食材從 $137,987（23.58%）降至 $49,565（8.74%），減少 -$88,422（-64%），是淨利成長最大貢獻。</li>
+    <li>7月有影片製作費$21,000＋車子保養/保險$6,348等一次性支出，8月完全沒有，其他費用從$44,665降到$25,690。</li>
+    <li>人事費用從$130,667降至$122,508，主因總監/小編/小幫手7月實付數字本來就比6月略低，非8月刻意調薪。</li>
+    <li>毛利率回升+11.79個百分點（63.92%→75.71%），加上費用面全面下降，共同推升淨利+54.0%。</li>
+  </ul>
+</div>
+
+<div class="sec" style="margin-top:18px"><div class="sec-n">Ⅲ</div><div class="sec-t">最需要關注</div><div class="sec-r"></div></div>
+<div class="warn-box">
+  <div class="warn-title">⚠️ 食材成本率 8.74%，比7月23.58%低了14.84個百分點，數字異常需覆核</div>
+  <ul class="warn-list">
+    <li>過去5個月食材成本率都落在12%~24%之間，8月8.74%是目前紀錄裡最低的一個月，落差偏大。</li>
+    <li>可能原因：採購週期偏移（例如8月底才下的訂單9月才入帳）、或有食材支出漏登在流水帳裡。</li>
+    <li>建議：跟主廚/總監核對一次8月的食材採購紀錄是否完整，避免9月一次補登造成成本率忽高忽低，也影響主廚B獎金判定的準確性。</li>
+  </ul>
+</div>
+
+<div class="sec" style="margin-top:18px"><div class="sec-n">Ⅳ</div><div class="sec-t">9月重點目標</div><div class="sec-r"></div></div>
+<div class="insight-box" style="border-left-color:var(--green)">
+  <div class="insight-title" style="color:var(--green)">🎯 9月方向</div>
+  <ul class="insight-list">
+    <li>先確認8月食材成本率是否完整入帳，必要時在9月報表補註調整，維持數字可信度。</li>
+    <li>未稅營收目標：$580,000+，維持8月水準。</li>
+    <li>食材成本率目標：維持在13~16%的健康區間（不是越低越好，過低反而代表可能漏記）。</li>
+    <li>延續8月「無一次性支出」的費用紀律，加總營業成本目標維持在營收的55%以內。</li>
+  </ul>
+</div>
+
+<div class="folio"><span>三明治自己來 SANDWICH.STORE</span><span>2026 COMPARISON REPORT</span><span>JUL vs AUG</span></div>
+</div><!-- end page-cmp78 -->
+
+
 <!-- ══ 6–7月對比 ══ -->
 <div class="page" id="page-cmp67">
 <div class="compare-header">
@@ -1588,6 +1881,11 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 </div><!-- end page-cmp -->
 
 <script>
+function toggleSummary(btn) {
+  document.body.classList.toggle('summary-mode');
+  btn.classList.toggle('on');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
